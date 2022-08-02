@@ -1,0 +1,10 @@
+.label{
+    width: 36% !important;   
+}
+.inputButton{
+    width: 51% !important;
+}
+
+.container-fluid >button {
+    width: 100%;
+}
