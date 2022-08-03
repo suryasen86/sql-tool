@@ -3,7 +3,7 @@ const app = express()
 const util = require("util");
 const bodyParser = require('body-parser')
 const mysql = require('mysql2')
-const port = 3001
+const port = 3000
 const path=require('path')
 
 const CSVToJSON = require('csvtojson');
@@ -14,9 +14,6 @@ var cors = require('cors');
 
 app.use(cors());
 app.use(bodyParser.json())
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
 
 async function test(db_con, query) {
   return new Promise((resolve, reject) => {
@@ -119,11 +116,11 @@ app.get('/hello',async (req,res)=>{
 
   res.send({tables,columns})
 })
-app.use(express.static('frontend/build'))
+app.use(express.static('client/build'))
 
 app.get('*',(req,res)=>{
 
-    res.sendFile(path.resolve(__dirname,'frontend','build','index.html'))
+    res.sendFile(path.resolve(__dirname,'client','build','index.html'))
 
 })
 
