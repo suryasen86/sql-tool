@@ -66,18 +66,18 @@ app.post('/connection', async (req, res) => {
     db_credentials.source_global=source
     db_credentials.destination_global=destination
     var con = mysql.createConnection(source);
-    // var con2 = mysql.createConnection(destination);
+    var con2 = mysql.createConnection(destination);
     await check(con)
-    // await check(con2)
+    await check(con2)
     await test(con, inFoschema)
-    // await test(con2, inFoschema)
+    await test(con2, inFoschema)
     sourceResult = await test(con, `select * from TABLES where table_schema like '${source.database}%' order by TABLE_NAME`)
-    // destinationResult = await test(con2, `select * from TABLES where table_schema like '${destination.database}%' order by TABLE_NAME`)
+    destinationResult = await test(con2, `select * from TABLES where table_schema like '${destination.database}%' order by TABLE_NAME`)
     let sourecColumnWise=await test(con,`select * from columns where table_schema like '${source.database}%' order by TABLE_NAME`)
-    // let destinantionColumnWise=await test(con2,`select * from columns where table_schema like '${destination.database}%' order by TABLE_NAME`)
-    let tables=await CSVToJSON().fromFile('./files/tables.csv')
-    let columns=await CSVToJSON().fromFile('./files/columns.csv')
-    let data= { sourceResult, destinationResult:tables ,sourecColumnWise,destinantionColumnWise:columns}
+    let destinantionColumnWise=await test(con2,`select * from columns where table_schema like '${destination.database}%' order by TABLE_NAME`)
+    // let tables=await CSVToJSON().fromFile('./files/tables.csv')
+    // let columns=await CSVToJSON().fromFile('./files/columns.csv')
+    let data= { sourceResult, destinationResult ,sourecColumnWise,destinantionColumnWise}
     res.send({ status: 200, message: "success", data })
   } catch (error) {
     console.log(error.message)
