@@ -1,11 +1,13 @@
 const express = require('express')
 const app = express()
 const util = require("util");
+const dotenv=require('dotenv');
 const bodyParser = require('body-parser')
 const mysql = require('mysql2')
 const port = 3000
 const path=require('path')
-
+ // setting up congig file  ;
+dotenv.config({path:'./config.env'})
 const CSVToJSON = require('csvtojson');
 const db_credentials={
   source_global:'',destination_global:''
@@ -126,8 +128,8 @@ app.get('*',(req,res)=>{
 
 
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+const server=app.listen(process.env.PORT,()=>{
+  console.log(`server started on port : ${process.env.PORT} in  ${process.env.NODE_ENV}`)
 })
 
 
