@@ -4,6 +4,8 @@ const util = require("util");
 const bodyParser = require('body-parser')
 const mysql = require('mysql2')
 const port = 3001
+const path=require('path')
+
 const CSVToJSON = require('csvtojson');
 const db_credentials={
   source_global:'',destination_global:''
@@ -117,6 +119,16 @@ app.get('/hello',async (req,res)=>{
 
   res.send({tables,columns})
 })
+app.use(express.static('frontend/build'))
+
+app.get('*',(req,res)=>{
+
+    res.sendFile(path.resolve(__dirname,'frontend','build','index.html'))
+
+})
+
+
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
