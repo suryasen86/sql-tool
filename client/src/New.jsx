@@ -3,8 +3,11 @@ import React, { useState, useEffect } from "react";
 import "./styels/index.css";
 import axios from "axios";
 import { useAlert } from "react-alert";
-
+import ColumnWise from "./component/ColumnWise";
+import ReactHTMLTableToExcel from "react-html-table-to-excel";
+import Spinner from "./component/Spinner";
 const New = () => {
+  const [missingTables, setmissingTables] = useState(false);
   const copyScript = async (tableName, conType) => {
     let obj = cred[conType];
 
@@ -41,123 +44,46 @@ const New = () => {
     }
   }, []);
 
-  const handleOnclikc = (id) => {
-    settab(id);
-  };
-  const [tab, settab] = useState(2);
-  const alert = useAlert();
-  const [filters, setfilters] = useState(0);
-  const [destinationTables, setDestinationTables] = useState([]);
-  const [allRows, setAllRows] = useState([]);
-  const [soruceTables, setSoruceTables] = useState([]);
-  const [s_ip, setIp] = useState("");
-  const [s_user, setUser] = useState("");
+  const mappingForTableWise = (soruce, destination) => {
+    return new Promise((resolve, reject) => {
+      let innderSource = soruce;
+      let innerDestination = destination;
+      let result = [];
 
-  const [s_Schema, setSchema] = useState(cred?.source?.database);
+      innderSource.forEach((element) => {
+        let obj = innerDestination.find(
+          (e) => e.TABLE_NAME == element.TABLE_NAME
+        );
+        if (obj) {
+          if (obj.TABLE_COLLATION == element.TABLE_COLLATION) {
+            result.push({
+              source: {
+                name: element.TABLE_NAME,
+                colletion: element.TABLE_COLLATION,
+              },
+              destinantion: {
+                name: obj.TABLE_NAME,
+                colletion: obj.TABLE_COLLATION,
+              },
+              color: "no",
+            });
+          } else {
+            result.push({
+              source: {
+                name: element.TABLE_NAME,
+                colletion: element.TABLE_COLLATION,
+              },
+              destinantion: {
+                name: obj.TABLE_NAME,
+                colletion: obj.TABLE_COLLATION,
+              },
+              color: "table-warning",
+            });
+          }
 
-  const [s_pass, setPass] = useState("");
-
-  const [s_port, setport] = useState("");
-
-  const [d_ip, set_d_Ip] = useState("");
-  const [d_user, set_d_User] = useState("");
-
-  const [d_Schema, set_d_Schema] = useState("");
-
-  const [d_pass, set_d_Pass] = useState("");
-
-  const [d_port, set_d_port] = useState("");
-
-  const HandleOnClick = async () => {
-    // console.log(s_ip,s_user,s_Schema,s_pass,s_port)
-    // console.log(d_ip,d_user,d_Schema,d_pass,d_port)
-    if (s_ip === "") {
-      alert.error("Please Fill Source Ip address");
-      return;
-    }
-    if (s_user === "") {
-      alert.error("Please Fill Source User Name");
-      return;
-    }
-    if (s_Schema === "") {
-      alert.error("Please Fill Source Schema Name");
-      return;
-    }
-    if (s_pass === "") {
-      alert.error("Please Fill Source Password");
-      return;
-    }
-    if (s_port === "") {
-      alert.error("Please Fill Source  Port");
-      return;
-    }
-
-    // destination
-    if (d_ip === "") {
-      alert.error("Please Fill destinantion Ip address");
-      return;
-    }
-    if (d_user === "") {
-      alert.error("Please Fill destinantion User Name");
-      return;
-    }
-    if (d_Schema === "") {
-      alert.error("Please Fill destinantion Schema Name");
-      return;
-    }
-    if (d_pass === "") {
-      alert.error("Please Fill destinantion Password");
-      return;
-    }
-    if (d_port === "") {
-      alert.error("Please Fill destinantion  Port");
-      return;
-    }
-    let body = {
-      source: {
-        ip: s_ip,
-        user: s_user,
-        database: s_Schema,
-        password: s_pass,
-        port: s_port,
-      },
-      destination: {
-        ip: d_ip,
-        user: d_user,
-        database: d_Schema,
-        password: d_pass,
-        port: d_port,
-      },
-    };
-    localStorage.setItem("cred", JSON.stringify(body));
-    let { data } = await axios.post("http://localhost:3001/connection", body);
-
-    if (data.status !== 200) {
-      return alert.error(data.message);
-    }
-
-    alert.success(data.message);
-    console.log(data.data);
-    let { sourceResult, destinationResult } = data.data;
-    let result = [];
-
-    sourceResult.forEach((element) => {
-      let obj = destinationResult.find(
-        (e) => e.TABLE_NAME == element.TABLE_NAME
-      );
-      if (obj) {
-        if (obj.TABLE_COLLATION == element.TABLE_COLLATION) {
-          result.push({
-            source: {
-              name: element.TABLE_NAME,
-              colletion: element.TABLE_COLLATION,
-            },
-            destinantion: {
-              name: obj.TABLE_NAME,
-              colletion: obj.TABLE_COLLATION,
-            },
-            color: "no",
-          });
+          innerDestination = innerDestination.filter(
+            (word) => word.TABLE_NAME != obj.TABLE_NAME
+          );
         } else {
           result.push({
             source: {
@@ -165,53 +91,341 @@ const New = () => {
               colletion: element.TABLE_COLLATION,
             },
             destinantion: {
-              name: obj.TABLE_NAME,
-              colletion: obj.TABLE_COLLATION,
+              name: "",
+              colletion: "",
+            },
+            color: "table-danger",
+          });
+        }
+      });
+      if (innerDestination.length) {
+        innerDestination.forEach((element) => {
+          result.push({
+            source: {
+              name: "",
+              colletion: "",
+            },
+            destinantion: {
+              name: element.TABLE_NAME,
+              colletion: element.TABLE_COLLATION,
+            },
+            color: "table-danger",
+          });
+        });
+      }
+      // console.log(result);
+
+      setAllRows(result);
+      if (result.length) {
+        resolve(true);
+      } else {
+        reject("Error Mapping Source And Destination");
+      }
+    });
+  };
+  const mappingForColumnWise = (source, destination) => {
+    return new Promise((resolve,reject)=>{
+      let innerSource = source;
+    let innerDestination = destination;
+    let result = [];
+  
+    innerSource.forEach((element) => {
+
+      let obj = innerDestination.find(
+        (e) =>
+          e.TABLE_NAME == element.TABLE_NAME &&
+          e.COLUMN_NAME == element.COLUMN_NAME
+      );
+      if (obj) {
+        // checking for similarity
+        if (
+          element.IS_NULLABLE == obj.IS_NULLABLE &&
+          element.COLUMN_DEFAULT == obj.COLUMN_DEFAULT &&
+          element.COLUMN_TYPE == obj.COLUMN_TYPE &&
+          element.COLUMN_KEY == obj.COLUMN_KEY &&
+          element.EXTRA == obj.EXTRA
+        ) {
+          result.push({
+            source: {
+              TABLE_NAME: element.TABLE_NAME,
+              COLUMN_NAME: element.COLUMN_NAME,
+              COLUMN_DEFAULT: element.COLUMN_DEFAULT,
+              IS_NULLABLE: element.IS_NULLABLE,
+              COLUMN_TYPE: element.COLUMN_TYPE,
+              COLUMN_KEY: element.COLUMN_KEY,
+              EXTRA: element.EXTRA,
+            },
+            destination: {
+              TABLE_NAME: obj.TABLE_NAME,
+              COLUMN_NAME: obj.COLUMN_NAME,
+              COLUMN_DEFAULT: obj.COLUMN_DEFAULT,
+              IS_NULLABLE: obj.IS_NULLABLE,
+              COLUMN_TYPE: obj.COLUMN_TYPE,
+              COLUMN_KEY: obj.COLUMN_KEY,
+              EXTRA: obj.EXTRA,
+            },
+            color: "no",
+          });
+        } else {
+          result.push({
+            source: {
+              TABLE_NAME: element.TABLE_NAME,
+              COLUMN_NAME: element.COLUMN_NAME,
+              COLUMN_DEFAULT: element.COLUMN_DEFAULT,
+              IS_NULLABLE: element.IS_NULLABLE,
+              COLUMN_TYPE: element.COLUMN_TYPE,
+              COLUMN_KEY: element.COLUMN_KEY,
+              EXTRA: element.EXTRA,
+            },
+            destination: {
+              TABLE_NAME: obj.TABLE_NAME,
+              COLUMN_NAME: obj.COLUMN_NAME,
+              COLUMN_DEFAULT: obj.COLUMN_DEFAULT,
+              IS_NULLABLE: obj.IS_NULLABLE,
+              COLUMN_TYPE: obj.COLUMN_TYPE,
+              COLUMN_KEY: obj.COLUMN_KEY,
+              EXTRA: obj.EXTRA,
             },
             color: "table-warning",
           });
         }
-
-        destinationResult = destinationResult.filter(
-          (word) => word.TABLE_NAME != obj.TABLE_NAME
-        );
+        // innerDestination
+        innerDestination = innerDestination.filter((word) => word != obj);
       } else {
         result.push({
           source: {
-            name: element.TABLE_NAME,
-            colletion: element.TABLE_COLLATION,
+            TABLE_NAME: element.TABLE_NAME,
+            COLUMN_NAME: element.COLUMN_NAME,
+            COLUMN_DEFAULT: element.COLUMN_DEFAULT,
+            IS_NULLABLE: element.IS_NULLABLE,
+            COLUMN_TYPE: element.COLUMN_TYPE,
+            COLUMN_KEY: element.COLUMN_KEY,
+            EXTRA: element.EXTRA,
           },
-          destinantion: {
-            name: "",
-            colletion: "",
+          destination: {
+            TABLE_NAME: "",
+            COLUMN_NAME: "",
+            COLUMN_DEFAULT: "",
+            IS_NULLABLE: "",
+            COLUMN_TYPE: "",
+            COLUMN_KEY: "",
+            EXTRA: "",
           },
           color: "table-danger",
         });
       }
     });
-    if (destinationResult.length) {
-      destinationResult.forEach((element) => {
+    if (innerDestination.length) {
+      innerDestination.forEach((obj) => {
         result.push({
           source: {
-            name: "",
-            colletion: "",
+            TABLE_NAME: "",
+            COLUMN_NAME: "",
+            COLUMN_DEFAULT: "",
+            IS_NULLABLE: "",
+            COLUMN_TYPE: "",
+            COLUMN_KEY: "",
+            EXTRA: "",
           },
-          destinantion: {
-            name: element.TABLE_NAME,
-            colletion: element.TABLE_COLLATION,
+          destination: {
+            TABLE_NAME: obj.TABLE_NAME,
+            COLUMN_NAME: obj.COLUMN_NAME,
+            COLUMN_DEFAULT: obj.COLUMN_DEFAULT,
+            IS_NULLABLE: obj.IS_NULLABLE,
+            COLUMN_TYPE: obj.COLUMN_TYPE,
+            COLUMN_KEY: obj.COLUMN_KEY,
+            EXTRA: obj.EXTRA,
           },
           color: "table-danger",
         });
       });
+    } 
+    console.log(Array.isArray(missingTables))
+    console.log(missingTables)
+    let temp=[]
+    if(!Array.isArray(missingTables)){
+      return reject("Error in Finding Missing values")
     }
-    console.log(result);
-    setAllRows(result);
-    // setDestinationTables(data.data.destinationResult);
-    // setSoruceTables(data.data.sourceResult);
+    // result.filter(e=> !missingTables.includes(e.source.TABLE_NAME))
+    //
+    //  console.log(missingTables)
+    result.forEach(element => {
+     
+      // console.log(element.source.TABLE_NAME)
+      // console.log(!missingTables.includes(element.source.TABLE_NAME))
+      if (!missingTables.includes(element.source.TABLE_NAME)){
+        temp.push(element)
+      }
+    }); 
+    console.log(temp.length)
+    setAllColumnWiseData(temp);
+    resolve(temp.length)
+    // console.log(result.length)
+    })
+    
   };
+  const runValidation = () => {
+    if (s_ip === "") {
+      alert.error("Please Fill Source Ip address");
+      return false;
+    }
+    if (s_user === "") {
+      alert.error("Please Fill Source User Name");
+      return false;
+    }
+    if (s_Schema === "") {
+      alert.error("Please Fill Source Schema Name");
+      return false;
+    }
+    if (s_pass === "") {
+      alert.error("Please Fill Source Password");
+      return false;
+    }
+    if (s_port === "") {
+      alert.error("Please Fill Source  Port");
+      return false;
+    }
 
+    // destination
+    if (d_ip === "") {
+      alert.error("Please Fill destinantion Ip address");
+      return false;
+    }
+    if (d_user === "") {
+      alert.error("Please Fill destinantion User Name");
+      return false;
+    }
+    if (d_Schema === "") {
+      alert.error("Please Fill destinantion Schema Name");
+      return false;
+    }
+    // if (d_pass === "") {
+    //   alert.error("Please Fill destinantion Password");
+    //   return false;
+    // }
+    if (d_port === "") {
+      alert.error("Please Fill destinantion  Port");
+      return false;
+    }
+    return true;
+  };
+  const findMissingTables=(arr)=>{
+    // console.log(arr)
+    return new Promise((resolve,reject)=>{
+      
+      let array=arr
+      let missingValues=[]
+      if(!array.length){
+         return reject("Error In Finding Mising Valuse")
+      }
+      array.forEach(e => {
+          if( e.destinantion.colletion == "" && e.destinantion.name == ""){
+           
+            
+            if(!missingValues.includes(e.source.name)){
+              missingValues.push(e.source.name)
+            }
+          }
+      });
+      setmissingTables(missingValues)
+      // console.log(missingValues)
+      resolve(missingValues)
+    })
+   
+   
+  }
+  const handleOnclikc = (id) => {
+    if (id===tab)return 
+    settab(id);
+    setloader(true)
+  };
+  const [tab, settab] = useState(1);
+  const alert = useAlert();
+  const [loader, setloader] = useState(false);
+  const [filters, setfilters] = useState(0);
+  const [destinationTables, setDestinationTables] = useState([]);
+  const [soruceTables, setSoruceTables] = useState([]);
+  const [allRows, setAllRows] = useState([]);
+  const [sourceColumnWise, setsourceColumnWise] = useState([]);
+  const [destinationColumnWise, setdestinationColumnWise] = useState([]);
+  const [allColumnWiseData, setAllColumnWiseData] = useState([]);
+  const [s_ip, setIp] = useState("");
+  const [s_user, setUser] = useState("");
+  const [s_Schema, setSchema] = useState(cred?.source?.database);
+  const [s_pass, setPass] = useState("");
+  const [s_port, setport] = useState("");
+  const [d_ip, set_d_Ip] = useState("");
+  const [d_user, set_d_User] = useState("");
+  const [d_Schema, set_d_Schema] = useState("");
+  const [d_pass, set_d_Pass] = useState("");
+  const [d_port, set_d_port] = useState("");
+
+  const HandleOnClick = async () => {
+    try {
+      if (!runValidation()) return;
+      let body = {
+        source: {
+          ip: s_ip,
+          user: s_user,
+          database: s_Schema,
+          password: s_pass,
+          port: s_port,
+        },
+        destination: {
+          ip: d_ip,
+          user: d_user,
+          database: d_Schema,
+          password: d_pass,
+          port: d_port,
+        },
+      };
+      localStorage.setItem("cred", JSON.stringify(body));
+      let { data } = await axios.post("http://localhost:3001/connection", body);
+
+      if (data.status !== 200) {
+        return alert.error(data.message);
+      }
+      // alert.success(data.message);
+
+      let {
+        sourceResult,
+        destinationResult,
+        destinantionColumnWise,
+        sourecColumnWise,
+      } = data.data;
+      setSoruceTables(sourceResult);
+      setDestinationTables(destinationResult);
+      setsourceColumnWise(sourecColumnWise);
+      setdestinationColumnWise(destinantionColumnWise);
+      await mappingForTableWise(soruceTables, destinationTables);
+      
+      await mappingForColumnWise(sourceColumnWise, destinationColumnWise);
+      
+    } catch (error) {
+      alert.error(error.message || "Reconnect With data Base");
+    }
+  };
+  useEffect(() => {
+    
+     setloader(false)
+    if (tab === 1) {
+      mappingForTableWise(soruceTables, destinationTables);
+    } else {
+     
+      mappingForColumnWise(sourceColumnWise, destinationColumnWise);
+    }
+   
+  }, [tab]);
+  useEffect(() => {
+    async function fetchData() {
+      await  findMissingTables(allRows)
+    }
+    fetchData();
+   
+  }, [allRows]);
   return (
     <>
+   
       <div className="container">
         <div className="solid">
           <div className="row">
@@ -334,38 +548,46 @@ const New = () => {
           </div>
         </div>
         {/* tab switch */}
-        <ul class="nav nav-tabs">
-          <li class="nav-item">
+        <ul className="nav nav-tabs">
+          <li className="nav-item">
             <a
               onClick={() => {
                 handleOnclikc(1);
               }}
-              class={tab == 1 ? "nav-link active" : "nav-link"}
+              className={tab == 1 ? "nav-link active" : "nav-link"}
               aria-current="page"
-             
             >
               Table wise
             </a>
           </li>
-          <li class="nav-item">
+          <li className="nav-item">
             <a
               onClick={() => {
                 handleOnclikc(2);
               }}
-              class={tab == 2 ? "nav-link active" : "nav-link"}
-              
+              className={tab == 2 ? "nav-link active" : "nav-link"}
             >
               Column wise
             </a>
           </li>
         </ul>
+        {loader &&  <Spinner/>}
+        
         {/* tab switch */}
         {tab == 1 ? (
           <div className="row mt-5">
+            <ReactHTMLTableToExcel
+              id="test-table-xls-button"
+              className="btn btn-success"
+              table="table-to-xls2"
+              filename="tablexls"
+              sheet="tablexls"
+              buttonText="Download as XLS"
+            />
             <div className="d-flex justify-content-between ">
               <h4>Table compairison</h4>
               <select
-                class="form-select"
+                className="form-select"
                 aria-label="Default select example"
                 onChange={(e) => {
                   setfilters(e.target.value);
@@ -380,12 +602,12 @@ const New = () => {
             </div>
 
             <div className="col-6">
-              <h5>soruce</h5>
+              <h5>source</h5>
             </div>
             <div className="col-6">
               <h5>destinantion</h5>
             </div>
-            <table class="table">
+            <table className="table" id="table-to-xls2">
               <thead>
                 <tr>
                   <th scope="col">#</th>
@@ -400,7 +622,7 @@ const New = () => {
                   allRows.map((e, index) => {
                     if (filters == 0 || filters == 1) {
                       return (
-                        <tr class={e.color}>
+                        <tr key={index} className={e.color}>
                           <th scope="row">{index + 1}</th>
                           <td>{e.source.colletion}</td>
                           <td
@@ -426,7 +648,7 @@ const New = () => {
                         e.destinantion.name == ""
                       ) {
                         return (
-                          <tr class={e.color}>
+                          <tr key={index} className={e.color}>
                             <th scope="row">{index + 1}</th>
                             <td>{e.source.colletion}</td>
                             <td
@@ -444,7 +666,7 @@ const New = () => {
                     } else if (filters == 3) {
                       if (e.source.colletion == "" && e.source.name == "") {
                         return (
-                          <tr class={e.color}>
+                          <tr key={index} className={e.color}>
                             <th scope="row">{index + 1}</th>
                             <td
                               onClick={() => {
@@ -468,7 +690,7 @@ const New = () => {
                     } else if (filters == 4) {
                       if (e.color == "table-warning") {
                         return (
-                          <tr class={e.color}>
+                          <tr key={index} className={e.color}>
                             <th scope="row">{index + 1}</th>
                             <td
                               onClick={() => {
@@ -491,7 +713,7 @@ const New = () => {
                       }
                     } else {
                       return (
-                        <tr class={e.color}>
+                        <tr key={index} className={e.color}>
                           <th scope="row">{index + 1}</th>
                           <td
                             onClick={() => {
@@ -517,11 +739,7 @@ const New = () => {
             </table>
           </div>
         ) : (
-          <div>
-
-
-            This coloumn wise 
-          </div>
+          <ColumnWise result={allColumnWiseData} validation={Array.isArray(missingTables)} />
         )}
       </div>
     </>

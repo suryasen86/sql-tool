@@ -1,0 +1,52 @@
+TABLE_CATALOG,TABLE_SCHEMA,TABLE_NAME,TABLE_TYPE,ENGINE,VERSION,ROW_FORMAT,TABLE_ROWS,AVG_ROW_LENGTH,DATA_LENGTH,MAX_DATA_LENGTH,INDEX_LENGTH,DATA_FREE,AUTO_INCREMENT,CREATE_TIME,UPDATE_TIME,CHECK_TIME,TABLE_COLLATION,CHECKSUM,CREATE_OPTIONS,TABLE_COMMENT,MAX_INDEX_LENGTH,TEMPORARY
+def,db_1000479033,audit_logs,"BASE TABLE",MyISAM,10,Dynamic,746,98,73280,281474976710655,10240,0,747,"2022-08-03 08:50:36","2022-08-03 09:29:30",NULL,latin1_swedish_ci,NULL,,,288230376151710720,N
+def,db_1000479033,cron_maintenence,"BASE TABLE",InnoDB,10,Dynamic,0,0,16384,0,0,0,1,"2021-09-01 12:59:35",NULL,NULL,utf8mb4_unicode_ci,NULL,,,0,N
+def,db_1000479033,failed_jobs,"BASE TABLE",InnoDB,10,Dynamic,0,0,16384,0,0,0,1,"2021-09-01 12:59:35",NULL,NULL,utf8mb4_unicode_ci,NULL,,,0,N
+def,db_1000479033,migrations,"BASE TABLE",InnoDB,10,Dynamic,8,2048,16384,0,0,0,12,"2021-09-01 12:59:35",NULL,NULL,utf8mb4_unicode_ci,NULL,,,0,N
+def,db_1000479033,mst_buyer,"BASE TABLE",InnoDB,10,Dynamic,6,2730,16384,0,0,0,127,"2022-07-29 15:20:22","2022-07-30 14:09:47",NULL,utf8mb4_general_ci,NULL,,,0,N
+def,db_1000479033,mst_buyer_f,"BASE TABLE",InnoDB,10,Dynamic,4,4096,16384,0,0,0,125,"2022-07-29 15:11:47","2022-07-29 09:58:37",NULL,utf8mb4_general_ci,NULL,,,0,N
+def,db_1000479033,mst_cancel_credit_debit_notes,"BASE TABLE",InnoDB,10,Dynamic,0,0,16384,0,0,0,1,"2021-09-01 12:59:35",NULL,NULL,utf8mb4_unicode_ci,NULL,,,0,N
+def,db_1000479033,mst_comp,"BASE TABLE",InnoDB,10,Dynamic,0,0,16384,0,0,0,2,"2022-07-27 09:58:40",NULL,NULL,utf8mb4_unicode_ci,NULL,,,0,N
+def,db_1000479033,mst_credit_notes,"BASE TABLE",InnoDB,10,Dynamic,14,12873,180224,0,0,0,16,"2021-09-01 12:59:35",NULL,NULL,utf8mb4_unicode_ci,NULL,,,0,N
+def,db_1000479033,mst_debit_notes,"BASE TABLE",InnoDB,10,Dynamic,0,0,16384,0,0,0,2,"2021-09-01 12:59:35",NULL,NULL,utf8mb4_unicode_ci,NULL,,,0,N
+def,db_1000479033,mst_device,"BASE TABLE",InnoDB,10,Dynamic,0,0,16384,0,0,0,NULL,"2022-07-27 10:07:30",NULL,NULL,utf8mb4_general_ci,NULL,,,0,N
+def,db_1000479033,mst_functionality,"BASE TABLE",InnoDB,10,Dynamic,5,3276,16384,0,0,0,6,"2021-09-01 12:59:35",NULL,NULL,utf8mb4_unicode_ci,NULL,,,0,N
+def,db_1000479033,mst_godown,"BASE TABLE",InnoDB,10,Dynamic,2,8192,16384,0,0,0,NULL,"2022-07-27 10:09:48","2022-07-28 18:02:27",NULL,utf8mb4_general_ci,NULL,,,0,N
+def,db_1000479033,mst_invoice,"BASE TABLE",InnoDB,10,Dynamic,60252,322,19431424,0,0,4194304,82919,"2022-07-27 10:12:45","2022-08-03 09:18:06",NULL,utf8mb4_unicode_ci,NULL,,,0,N
+def,db_1000479033,mst_payment,"BASE TABLE",InnoDB,10,Dynamic,3,5461,16384,0,0,0,11,"2022-07-28 15:47:50","2022-07-28 15:49:38",NULL,utf8mb4_general_ci,NULL,,,0,N
+def,db_1000479033,mst_product,"BASE TABLE",InnoDB,10,Dynamic,580,197,114688,0,0,0,585,"2022-08-01 09:49:09","2022-08-02 09:42:30",NULL,utf8mb4_general_ci,NULL,,,0,N
+def,db_1000479033,mst_product_c,"BASE TABLE",InnoDB,10,Dynamic,637,128,81920,0,0,0,638,"2022-07-27 10:22:40","2022-07-30 10:09:59",NULL,latin1_swedish_ci,NULL,,,0,N
+def,db_1000479033,mst_product_creates,"BASE TABLE",InnoDB,10,Dynamic,1047,2519,2637824,0,0,4194304,1221,"2021-09-01 12:59:37","2022-08-02 09:42:30",NULL,utf8mb4_unicode_ci,NULL,,,0,N
+def,db_1000479033,mst_purchases,"BASE TABLE",InnoDB,10,Dynamic,6383,4032,25739264,0,0,4194304,7754,"2022-07-27 10:29:41","2022-08-03 09:27:21",NULL,utf8mb4_unicode_ci,NULL,,,0,N
+def,db_1000479033,mst_report,"BASE TABLE",InnoDB,10,Dynamic,0,0,16384,0,0,0,4,"2022-07-27 10:31:58",NULL,NULL,utf8mb4_general_ci,NULL,,,0,N
+def,db_1000479033,mst_role,"BASE TABLE",InnoDB,10,Dynamic,2,8192,16384,0,0,0,4,"2021-09-01 12:59:38",NULL,NULL,utf8mb4_unicode_ci,NULL,,,0,N
+def,db_1000479033,mst_salesman_invoice,"BASE TABLE",InnoDB,10,Dynamic,23,12822,294912,0,0,0,24,"2022-07-30 10:14:48","2022-08-02 16:00:08",NULL,utf8mb4_general_ci,NULL,,,0,N
+def,db_1000479033,mst_sales_man,"BASE TABLE",InnoDB,10,Dynamic,2,8192,16384,0,0,0,234,"2022-07-28 17:05:22","2022-08-01 10:57:53",NULL,utf8_general_ci,NULL,,,0,N
+def,db_1000479033,mst_schedulers,"BASE TABLE",InnoDB,10,Dynamic,0,0,16384,0,0,0,2,"2021-09-01 12:59:38","2022-08-03 09:29:30",NULL,latin1_swedish_ci,NULL,,,0,N
+def,db_1000479033,mst_seller,"BASE TABLE",InnoDB,10,Dynamic,0,0,16384,0,0,0,101,"2022-07-27 10:36:42",NULL,NULL,utf8mb4_general_ci,NULL,,,0,N
+def,db_1000479033,mst_tax,"BASE TABLE",InnoDB,10,Dynamic,88,186,16384,0,0,0,91,"2022-07-27 10:35:39","2022-08-01 10:42:47",NULL,utf8mb4_general_ci,NULL,,,0,N
+def,db_1000479033,mst_user,"BASE TABLE",InnoDB,10,Dynamic,3,5461,16384,0,0,0,4,"2022-07-27 10:39:00","2022-07-28 18:37:43",NULL,utf8mb4_unicode_ci,NULL,,,0,N
+def,db_1000479033,oauth_access_tokens,"BASE TABLE",InnoDB,10,Dynamic,18306,237,4341760,0,0,4194304,NULL,"2021-09-01 14:50:54","2022-08-03 09:30:03",NULL,utf8mb4_unicode_ci,NULL,,,0,N
+def,db_1000479033,oauth_auth_codes,"BASE TABLE",InnoDB,10,Dynamic,0,0,16384,0,0,0,NULL,"2022-07-27 10:39:57",NULL,NULL,utf8mb4_unicode_ci,NULL,,,0,N
+def,db_1000479033,oauth_clients,"BASE TABLE",InnoDB,10,Dynamic,4,4096,16384,0,0,0,5,"2022-07-27 10:40:24",NULL,NULL,utf8mb4_unicode_ci,NULL,,,0,N
+def,db_1000479033,oauth_personal_access_clients,"BASE TABLE",InnoDB,10,Dynamic,2,8192,16384,0,0,0,3,"2022-07-27 10:41:13",NULL,NULL,utf8mb4_unicode_ci,NULL,,,0,N
+def,db_1000479033,oauth_refresh_tokens,"BASE TABLE",InnoDB,10,Dynamic,0,0,16384,0,0,0,NULL,"2022-07-27 10:41:52",NULL,NULL,utf8mb4_unicode_ci,NULL,,,0,N
+def,db_1000479033,password_resets,"BASE TABLE",InnoDB,10,Dynamic,0,0,16384,0,0,0,NULL,"2021-09-01 14:51:16",NULL,NULL,utf8mb4_unicode_ci,NULL,,,0,N
+def,db_1000479033,plt_common,"BASE TABLE",InnoDB,10,Dynamic,42,390,16384,0,0,0,65,"2022-07-29 15:17:34","2022-08-01 11:14:24",NULL,utf8mb4_general_ci,NULL,,,0,N
+def,db_1000479033,plt_common_f,"BASE TABLE",InnoDB,10,Dynamic,39,420,16384,0,0,0,64,"2022-07-29 15:13:54","2022-07-28 16:52:38",NULL,utf8mb4_general_ci,NULL,,,0,N
+def,db_1000479033,purchase_recon,"BASE TABLE",InnoDB,10,Dynamic,0,0,16384,0,0,0,33,"2022-07-27 10:43:47",NULL,NULL,utf8mb4_general_ci,NULL,,,0,N
+def,db_1000479033,recon_dtl,"BASE TABLE",InnoDB,10,Dynamic,0,0,16384,0,0,0,33493,"2022-07-27 10:44:37",NULL,NULL,utf8mb4_general_ci,NULL,,,0,N
+def,db_1000479033,return_stock,"BASE TABLE",InnoDB,10,Dynamic,7,2340,16384,0,0,0,8,"2022-07-28 18:47:48","2022-08-02 15:59:15",NULL,utf8mb4_general_ci,NULL,,,0,N
+def,db_1000479033,routing,"BASE TABLE",InnoDB,10,Dynamic,5,3276,16384,0,0,0,6,"2021-09-01 12:59:39",NULL,NULL,utf8mb4_unicode_ci,NULL,,,0,N
+def,db_1000479033,schedulers,"BASE TABLE",InnoDB,10,Dynamic,0,0,16384,0,0,0,2,"2021-09-01 12:59:39","2022-07-29 10:55:33",NULL,utf8mb4_unicode_ci,NULL,,,0,N
+def,db_1000479033,scheduler_time,"BASE TABLE",InnoDB,10,Dynamic,0,0,16384,0,0,0,1,"2022-07-27 10:45:41",NULL,NULL,utf8mb4_general_ci,NULL,,,0,N
+def,db_1000479033,stock_adjustmant,"BASE TABLE",InnoDB,10,Dynamic,21,2340,49152,0,0,0,22,"2022-07-27 10:46:34","2022-08-02 15:51:30",NULL,utf8mb4_general_ci,NULL,,,0,N
+def,db_1000479033,trans_batch,"BASE TABLE",InnoDB,10,Dynamic,21971,167,3686400,0,0,4194304,25401,"2021-09-01 12:59:39","2022-08-03 09:27:20",NULL,utf8mb4_unicode_ci,NULL,,,0,N
+def,db_1000479033,trans_exceldata,"BASE TABLE",InnoDB,10,Dynamic,0,0,16384,0,0,0,1,"2021-09-01 12:59:39",NULL,NULL,utf8mb4_unicode_ci,NULL,,,0,N
+def,db_1000479033,trans_exceldata_hdr,"BASE TABLE",InnoDB,10,Dynamic,31813,62285,1981480960,0,0,6291456,82485,"2022-07-27 10:49:47","2022-08-03 09:18:06",NULL,utf8mb4_unicode_ci,NULL,,,0,N
+def,db_1000479033,trans_stock,"BASE TABLE",InnoDB,10,Dynamic,8,2048,16384,0,0,0,9,"2022-07-28 18:30:01","2022-08-02 15:51:30",NULL,utf8mb4_general_ci,NULL,,,0,N
+def,db_1000479033,trans_stock_manage,"BASE TABLE",InnoDB,10,Dynamic,414,197,81920,0,0,0,415,"2022-07-27 10:51:00","2022-08-03 09:27:21",NULL,utf8mb4_general_ci,NULL,,,0,N
+def,db_1000479033,trans_stock_summary,"BASE TABLE",InnoDB,10,Dynamic,103,159,16384,0,0,0,104,"2022-07-29 11:23:39","2022-08-03 09:27:21",NULL,utf8mb4_general_ci,NULL,,,0,N
+def,db_1000479033,trans_trip_dtl,"BASE TABLE",InnoDB,10,Dynamic,7,2340,16384,0,0,0,8,"2022-07-27 10:51:19","2022-08-02 15:58:16",NULL,utf8mb4_general_ci,NULL,,,0,N
+def,db_1000479033,trans_trip_hdr,"BASE TABLE",InnoDB,10,Dynamic,5,3276,16384,0,0,0,6,"2022-07-27 10:51:28","2022-08-02 16:29:55",NULL,utf8mb4_general_ci,NULL,,,0,N
+def,db_1000479033,users,"BASE TABLE",InnoDB,10,Dynamic,0,0,16384,0,16384,0,1,"2022-07-27 10:51:39",NULL,NULL,utf8mb4_unicode_ci,NULL,,,0,N

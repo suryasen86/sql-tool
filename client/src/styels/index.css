@@ -8,3 +8,8 @@
 .container-fluid >button {
     width: 100%;
 }
+
+
+.wrong-value{
+    color:'red' !important;
+}
