@@ -82,20 +82,7 @@ const ColumnWise = ({ result, validation, setresult, rowData,setloader }) => {
     let finalScript=""; 
 
     tempArray.forEach((element) => {
-      // TABLE_NAME: element.TABLE_NAME,
-      //       COLUMN_NAME: element.COLUMN_NAME,
-      //       COLUMN_DEFAULT: element.COLUMN_DEFAULT,
-      //       IS_NULLABLE: element.IS_NULLABLE,
-      //       COLUMN_TYPE: element.COLUMN_TYPE,
-      //       COLUMN_KEY: element.COLUMN_KEY,
-      //       EXTRA: element.EXTRA,
-      //ALTER TABLE `test`.`mst_cat` 
-      // ADD COLUMN `wef` VARCHAR(45) NULL ,
-      // CHANGE COLUMN `cat_img` `cat_img` VARCHAR(100) NULL DEFAULT NULL ;
-
-
-      //  ADD UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE;
-      //ADD PRIMARY KEY (`id`);
+    
 
       let checkExsit=finalresponse.find(e=>e.table_name==element.source.TABLE_NAME)
        let keys=`${element.source.COLUMN_TYPE} ${element.source.IS_NULLABLE=='YES'?"NULL":"NOT NULL"}   ${element.source.IS_NULLABLE=='NO'  && !element.source.COLUMN_DEFAULT    ? "":   "DEFAULT " +element.source.COLUMN_DEFAULT}  ${element.source.EXTRA =='DEFAULT_GENERATED'?"":element.source.EXTRA}`
