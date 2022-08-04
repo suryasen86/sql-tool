@@ -51,7 +51,7 @@ const ColumnWise = ({ result, validation, setresult, rowData,setloader }) => {
         resolve(newresult);
       }
       else {
-        console.log("last", newresult);
+        // console.log("last", newresult);
         setresult(newresult);
         resolve(newresult);
       }
@@ -76,7 +76,7 @@ const ColumnWise = ({ result, validation, setresult, rowData,setloader }) => {
     element.click();
   }
   const findTablesForAlter = (arr) => {
-    console.log(arr)
+    // console.log(arr)
     let tempArray = arr;
     let finalresponse = [];
     let finalScript=""; 
@@ -105,7 +105,8 @@ const ColumnWise = ({ result, validation, setresult, rowData,setloader }) => {
            if(element.source.COLUMN_KEY =='UNI')  keys += `, ADD UNIQUE INDEX ${element.source.COLUMN_NAME}_UNIQUE (${element.source.COLUMN_NAME} ASC) VISIBLE`
            else if (element.source.COLUMN_KEY =='PRI') keys +=`, ADD PRIMARY KEY (${element.source.COLUMN_NAME}) `
            else if (element.source.COLUMN_KEY=='MUL') keys += `, ADD INDEX ${element.source.TABLE_NAME}_${element.source.COLUMN_NAME}_index  (${element.source.COLUMN_NAME} ASC) VISIBLE `
-           console.log(keys) }
+          //  console.log(keys) 
+          }
       //  }ADD INDEX `oauth_auth_codes_user_id_index` (`user_id` ASC) VISIBLE;
         if(element.color=='table-warning'){
           // edit
@@ -147,27 +148,28 @@ const ColumnWise = ({ result, validation, setresult, rowData,setloader }) => {
        
       
     });
-    console.log(finalScript);
+    // console.log(finalScript);
     setgenScript(finalScript)
+    // downloadTxtFile()
 
   };
   return (
     <div>
-      {!validation ? (
+      {!result.length ? (
         "Please Reconnect Server to Fetch"
       ) : (
         <>
           <button
-            className="btn btn-danger"
+            className="btn btn-danger mx-1"
             onClick={() => {
               findTablesForAlter(result);
             }}
           >
             {" "}
-            get script
+            Genrate script
           </button>
           {genScript&&
-          <button onClick={downloadTxtFile}>Download txt</button> }
+          <button className="btn btn-warning mx-1" onClick={downloadTxtFile}>Download Script</button> }
           
           <ReactHTMLTableToExcel
             id="test-table-xls-button"

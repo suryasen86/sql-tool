@@ -272,8 +272,8 @@ const New = () => {
         });
       });
     } 
-    console.log(Array.isArray(missingTables))
-    console.log(missingTables)
+    // console.log(Array.isArray(missingTables))
+    // console.log(missingTables)
     let temp=[]
     if(!Array.isArray(missingTables)){
       return reject("Error in Finding Missing values")
@@ -289,7 +289,7 @@ const New = () => {
         temp.push(element)
       }
     }); 
-    console.log(temp.length)
+    // console.log(temp.length)
     setAllColumnWiseData(temp);
     setAllColumnWiseData2(temp)
     resolve(temp.length)
@@ -420,7 +420,10 @@ const New = () => {
         return alert.error(data.message);
       }
       // alert.success(data.message);
-
+      setSoruceTables([]);
+      setDestinationTables([]);
+      setsourceColumnWise([]);
+      setdestinationColumnWise([]);
       let {
         sourceResult,
         destinationResult,
