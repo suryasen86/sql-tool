@@ -167,7 +167,38 @@ const New = () => {
             },
             color: "no",
           });
-        } else {
+        } 
+        else if ( element.COLUMN_TYPE.includes('int') && obj.COLUMN_TYPE.includes('int') &&
+        
+        element.IS_NULLABLE == obj.IS_NULLABLE &&
+        element.COLUMN_DEFAULT == obj.COLUMN_DEFAULT &&
+         
+        element.COLUMN_KEY == obj.COLUMN_KEY &&
+        element.EXTRA == obj.EXTRA
+        ){
+          result.push({
+            source: {
+              TABLE_NAME: element.TABLE_NAME,
+              COLUMN_NAME: element.COLUMN_NAME,
+              COLUMN_DEFAULT: element.COLUMN_DEFAULT,
+              IS_NULLABLE: element.IS_NULLABLE,
+              COLUMN_TYPE: element.COLUMN_TYPE,
+              COLUMN_KEY: element.COLUMN_KEY,
+              EXTRA: element.EXTRA,
+            },
+            destination: {
+              TABLE_NAME: obj.TABLE_NAME,
+              COLUMN_NAME: obj.COLUMN_NAME,
+              COLUMN_DEFAULT: obj.COLUMN_DEFAULT,
+              IS_NULLABLE: obj.IS_NULLABLE,
+              COLUMN_TYPE: obj.COLUMN_TYPE,
+              COLUMN_KEY: obj.COLUMN_KEY,
+              EXTRA: obj.EXTRA,
+            },
+            color: "no",
+          });
+        }
+        else {
           result.push({
             source: {
               TABLE_NAME: element.TABLE_NAME,
