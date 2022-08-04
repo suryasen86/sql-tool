@@ -7,6 +7,7 @@ import ColumnWise from "./component/ColumnWise";
 import ReactHTMLTableToExcel from "react-html-table-to-excel";
 import Spinner from "./component/Spinner";
 const New = () => {
+  const url='http://localhost:4000';
   const [missingTables, setmissingTables] = useState(false);
   const copyScript = async (tableName, conType) => {
     let obj = cred[conType];
@@ -15,7 +16,7 @@ const New = () => {
       obj,
       tableName,
     };
-    let { data } = await axios.post("/copy", body);
+    let { data } = await axios.post(`${url}/copy`, body);
 
     if (data.status !== 200) {
       return alert.error(data.message);
@@ -259,6 +260,7 @@ const New = () => {
     }); 
     console.log(temp.length)
     setAllColumnWiseData(temp);
+    setAllColumnWiseData2(temp)
     resolve(temp.length)
     // console.log(result.length)
     })
@@ -349,6 +351,7 @@ const New = () => {
   const [sourceColumnWise, setsourceColumnWise] = useState([]);
   const [destinationColumnWise, setdestinationColumnWise] = useState([]);
   const [allColumnWiseData, setAllColumnWiseData] = useState([]);
+  const [allColumnWiseData2, setAllColumnWiseData2] = useState([]);
   const [s_ip, setIp] = useState("");
   const [s_user, setUser] = useState("");
   const [s_Schema, setSchema] = useState(cred?.source?.database);
@@ -380,7 +383,7 @@ const New = () => {
         },
       };
       localStorage.setItem("cred", JSON.stringify(body));
-      let { data } = await axios.post("/connection", body);
+      let { data } = await axios.post(`${url}/connection`, body);
 
       if (data.status !== 200) {
         return alert.error(data.message);
@@ -739,7 +742,7 @@ const New = () => {
             </table>
           </div>
         ) : (
-          <ColumnWise result={allColumnWiseData} validation={Array.isArray(missingTables)} />
+          <ColumnWise result={allColumnWiseData} rowData={allColumnWiseData2} setloader={setloader} setresult={setAllColumnWiseData} validation={Array.isArray(missingTables)} />
         )}
       </div>
     </>
