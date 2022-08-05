@@ -4,7 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "SET NODE_ENV=PRODUCTION& nodemon app",
+    "start": "EXPORT NODE_ENV=PRODUCTION& nodemon app",
     "seeder": "node seeder.js",
     "dev": "SET NODE_ENV=DEVELOPEMENT& nodemon app",
     "prod": "SET NODE_ENV=PRODUCTION& nodemon app",

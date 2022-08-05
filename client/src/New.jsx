@@ -7,7 +7,7 @@ import ColumnWise from "./component/ColumnWise";
 import ReactHTMLTableToExcel from "react-html-table-to-excel";
 import Spinner from "./component/Spinner";
 const New = () => {
-  const url='http://localhost:4000';
+  const url = "";
   const [missingTables, setmissingTables] = useState(false);
   const copyScript = async (tableName, conType) => {
     let obj = cred[conType];
@@ -16,7 +16,7 @@ const New = () => {
       obj,
       tableName,
     };
-    let { data } = await axios.post(`${url}/copy`, body);
+    let { data } = await axios.post(`/copy`, body);
 
     if (data.status !== 200) {
       return alert.error(data.message);
@@ -125,27 +125,102 @@ const New = () => {
     });
   };
   const mappingForColumnWise = (source, destination) => {
-    return new Promise((resolve,reject)=>{
+    return new Promise((resolve, reject) => {
       let innerSource = source;
-    let innerDestination = destination;
-    let result = [];
-  
-    innerSource.forEach((element) => {
+      let innerDestination = destination;
+      let result = [];
 
-      let obj = innerDestination.find(
-        (e) =>
-          e.TABLE_NAME == element.TABLE_NAME &&
-          e.COLUMN_NAME == element.COLUMN_NAME
-      );
-      if (obj) {
-        // checking for similarity
-        if (
-          element.IS_NULLABLE == obj.IS_NULLABLE &&
-          element.COLUMN_DEFAULT == obj.COLUMN_DEFAULT &&
-          element.COLUMN_TYPE == obj.COLUMN_TYPE &&
-          element.COLUMN_KEY == obj.COLUMN_KEY &&
-          element.EXTRA == obj.EXTRA
-        ) {
+      innerSource.forEach((element) => {
+        let obj = innerDestination.find(
+          (e) =>
+            e.TABLE_NAME == element.TABLE_NAME &&
+            e.COLUMN_NAME == element.COLUMN_NAME
+        );
+        if (obj) {
+          // checking for similarity
+          if (
+            element.IS_NULLABLE == obj.IS_NULLABLE &&
+            element.COLUMN_DEFAULT == obj.COLUMN_DEFAULT &&
+            element.COLUMN_TYPE == obj.COLUMN_TYPE &&
+            element.COLUMN_KEY == obj.COLUMN_KEY &&
+            element.EXTRA == obj.EXTRA
+          ) {
+            result.push({
+              source: {
+                TABLE_NAME: element.TABLE_NAME,
+                COLUMN_NAME: element.COLUMN_NAME,
+                COLUMN_DEFAULT: element.COLUMN_DEFAULT,
+                IS_NULLABLE: element.IS_NULLABLE,
+                COLUMN_TYPE: element.COLUMN_TYPE,
+                COLUMN_KEY: element.COLUMN_KEY,
+                EXTRA: element.EXTRA,
+              },
+              destination: {
+                TABLE_NAME: obj.TABLE_NAME,
+                COLUMN_NAME: obj.COLUMN_NAME,
+                COLUMN_DEFAULT: obj.COLUMN_DEFAULT,
+                IS_NULLABLE: obj.IS_NULLABLE,
+                COLUMN_TYPE: obj.COLUMN_TYPE,
+                COLUMN_KEY: obj.COLUMN_KEY,
+                EXTRA: obj.EXTRA,
+              },
+              color: "no",
+            });
+          } else if (
+            element.COLUMN_TYPE.includes("int") &&
+            obj.COLUMN_TYPE.includes("int") &&
+            element.IS_NULLABLE == obj.IS_NULLABLE &&
+            element.COLUMN_DEFAULT == obj.COLUMN_DEFAULT &&
+            element.COLUMN_KEY == obj.COLUMN_KEY &&
+            element.EXTRA == obj.EXTRA
+          ) {
+            result.push({
+              source: {
+                TABLE_NAME: element.TABLE_NAME,
+                COLUMN_NAME: element.COLUMN_NAME,
+                COLUMN_DEFAULT: element.COLUMN_DEFAULT,
+                IS_NULLABLE: element.IS_NULLABLE,
+                COLUMN_TYPE: element.COLUMN_TYPE,
+                COLUMN_KEY: element.COLUMN_KEY,
+                EXTRA: element.EXTRA,
+              },
+              destination: {
+                TABLE_NAME: obj.TABLE_NAME,
+                COLUMN_NAME: obj.COLUMN_NAME,
+                COLUMN_DEFAULT: obj.COLUMN_DEFAULT,
+                IS_NULLABLE: obj.IS_NULLABLE,
+                COLUMN_TYPE: obj.COLUMN_TYPE,
+                COLUMN_KEY: obj.COLUMN_KEY,
+                EXTRA: obj.EXTRA,
+              },
+              color: "no",
+            });
+          } else {
+            result.push({
+              source: {
+                TABLE_NAME: element.TABLE_NAME,
+                COLUMN_NAME: element.COLUMN_NAME,
+                COLUMN_DEFAULT: element.COLUMN_DEFAULT,
+                IS_NULLABLE: element.IS_NULLABLE,
+                COLUMN_TYPE: element.COLUMN_TYPE,
+                COLUMN_KEY: element.COLUMN_KEY,
+                EXTRA: element.EXTRA,
+              },
+              destination: {
+                TABLE_NAME: obj.TABLE_NAME,
+                COLUMN_NAME: obj.COLUMN_NAME,
+                COLUMN_DEFAULT: obj.COLUMN_DEFAULT,
+                IS_NULLABLE: obj.IS_NULLABLE,
+                COLUMN_TYPE: obj.COLUMN_TYPE,
+                COLUMN_KEY: obj.COLUMN_KEY,
+                EXTRA: obj.EXTRA,
+              },
+              color: "table-warning",
+            });
+          }
+          // innerDestination
+          innerDestination = innerDestination.filter((word) => word != obj);
+        } else {
           result.push({
             source: {
               TABLE_NAME: element.TABLE_NAME,
@@ -157,145 +232,65 @@ const New = () => {
               EXTRA: element.EXTRA,
             },
             destination: {
-              TABLE_NAME: obj.TABLE_NAME,
-              COLUMN_NAME: obj.COLUMN_NAME,
-              COLUMN_DEFAULT: obj.COLUMN_DEFAULT,
-              IS_NULLABLE: obj.IS_NULLABLE,
-              COLUMN_TYPE: obj.COLUMN_TYPE,
-              COLUMN_KEY: obj.COLUMN_KEY,
-              EXTRA: obj.EXTRA,
+              TABLE_NAME: "",
+              COLUMN_NAME: "",
+              COLUMN_DEFAULT: "",
+              IS_NULLABLE: "",
+              COLUMN_TYPE: "",
+              COLUMN_KEY: "",
+              EXTRA: "",
             },
-            color: "no",
-          });
-        } 
-        else if ( element.COLUMN_TYPE.includes('int') && obj.COLUMN_TYPE.includes('int') &&
-        
-        element.IS_NULLABLE == obj.IS_NULLABLE &&
-        element.COLUMN_DEFAULT == obj.COLUMN_DEFAULT &&
-         
-        element.COLUMN_KEY == obj.COLUMN_KEY &&
-        element.EXTRA == obj.EXTRA
-        ){
-          result.push({
-            source: {
-              TABLE_NAME: element.TABLE_NAME,
-              COLUMN_NAME: element.COLUMN_NAME,
-              COLUMN_DEFAULT: element.COLUMN_DEFAULT,
-              IS_NULLABLE: element.IS_NULLABLE,
-              COLUMN_TYPE: element.COLUMN_TYPE,
-              COLUMN_KEY: element.COLUMN_KEY,
-              EXTRA: element.EXTRA,
-            },
-            destination: {
-              TABLE_NAME: obj.TABLE_NAME,
-              COLUMN_NAME: obj.COLUMN_NAME,
-              COLUMN_DEFAULT: obj.COLUMN_DEFAULT,
-              IS_NULLABLE: obj.IS_NULLABLE,
-              COLUMN_TYPE: obj.COLUMN_TYPE,
-              COLUMN_KEY: obj.COLUMN_KEY,
-              EXTRA: obj.EXTRA,
-            },
-            color: "no",
+            color: "table-danger",
           });
         }
-        else {
-          result.push({
-            source: {
-              TABLE_NAME: element.TABLE_NAME,
-              COLUMN_NAME: element.COLUMN_NAME,
-              COLUMN_DEFAULT: element.COLUMN_DEFAULT,
-              IS_NULLABLE: element.IS_NULLABLE,
-              COLUMN_TYPE: element.COLUMN_TYPE,
-              COLUMN_KEY: element.COLUMN_KEY,
-              EXTRA: element.EXTRA,
-            },
-            destination: {
-              TABLE_NAME: obj.TABLE_NAME,
-              COLUMN_NAME: obj.COLUMN_NAME,
-              COLUMN_DEFAULT: obj.COLUMN_DEFAULT,
-              IS_NULLABLE: obj.IS_NULLABLE,
-              COLUMN_TYPE: obj.COLUMN_TYPE,
-              COLUMN_KEY: obj.COLUMN_KEY,
-              EXTRA: obj.EXTRA,
-            },
-            color: "table-warning",
-          });
-        }
-        // innerDestination
-        innerDestination = innerDestination.filter((word) => word != obj);
-      } else {
-        result.push({
-          source: {
-            TABLE_NAME: element.TABLE_NAME,
-            COLUMN_NAME: element.COLUMN_NAME,
-            COLUMN_DEFAULT: element.COLUMN_DEFAULT,
-            IS_NULLABLE: element.IS_NULLABLE,
-            COLUMN_TYPE: element.COLUMN_TYPE,
-            COLUMN_KEY: element.COLUMN_KEY,
-            EXTRA: element.EXTRA,
-          },
-          destination: {
-            TABLE_NAME: "",
-            COLUMN_NAME: "",
-            COLUMN_DEFAULT: "",
-            IS_NULLABLE: "",
-            COLUMN_TYPE: "",
-            COLUMN_KEY: "",
-            EXTRA: "",
-          },
-          color: "table-danger",
-        });
-      }
-    });
-    if (innerDestination.length) {
-      innerDestination.forEach((obj) => {
-        result.push({
-          source: {
-            TABLE_NAME: "",
-            COLUMN_NAME: "",
-            COLUMN_DEFAULT: "",
-            IS_NULLABLE: "",
-            COLUMN_TYPE: "",
-            COLUMN_KEY: "",
-            EXTRA: "",
-          },
-          destination: {
-            TABLE_NAME: obj.TABLE_NAME,
-            COLUMN_NAME: obj.COLUMN_NAME,
-            COLUMN_DEFAULT: obj.COLUMN_DEFAULT,
-            IS_NULLABLE: obj.IS_NULLABLE,
-            COLUMN_TYPE: obj.COLUMN_TYPE,
-            COLUMN_KEY: obj.COLUMN_KEY,
-            EXTRA: obj.EXTRA,
-          },
-          color: "table-danger",
-        });
       });
-    } 
-    // console.log(Array.isArray(missingTables))
-    // console.log(missingTables)
-    let temp=[]
-    if(!Array.isArray(missingTables)){
-      return reject("Error in Finding Missing values")
-    }
-    // result.filter(e=> !missingTables.includes(e.source.TABLE_NAME))
-    //
-    //  console.log(missingTables)
-    result.forEach(element => {
-     
-      // console.log(element.source.TABLE_NAME)
-      // console.log(!missingTables.includes(element.source.TABLE_NAME))
-      if (!missingTables.includes(element.source.TABLE_NAME)){
-        temp.push(element)
+      if (innerDestination.length) {
+        innerDestination.forEach((obj) => {
+          result.push({
+            source: {
+              TABLE_NAME: "",
+              COLUMN_NAME: "",
+              COLUMN_DEFAULT: "",
+              IS_NULLABLE: "",
+              COLUMN_TYPE: "",
+              COLUMN_KEY: "",
+              EXTRA: "",
+            },
+            destination: {
+              TABLE_NAME: obj.TABLE_NAME,
+              COLUMN_NAME: obj.COLUMN_NAME,
+              COLUMN_DEFAULT: obj.COLUMN_DEFAULT,
+              IS_NULLABLE: obj.IS_NULLABLE,
+              COLUMN_TYPE: obj.COLUMN_TYPE,
+              COLUMN_KEY: obj.COLUMN_KEY,
+              EXTRA: obj.EXTRA,
+            },
+            color: "table-danger",
+          });
+        });
       }
-    }); 
-    // console.log(temp.length)
-    setAllColumnWiseData(temp);
-    setAllColumnWiseData2(temp)
-    resolve(temp.length)
-    // console.log(result.length)
-    })
-    
+      // console.log(Array.isArray(missingTables))
+      // console.log(missingTables)
+      let temp = [];
+      if (!Array.isArray(missingTables)) {
+        return reject("Error in Finding Missing values");
+      }
+      // result.filter(e=> !missingTables.includes(e.source.TABLE_NAME))
+      //
+      //  console.log(missingTables)
+      result.forEach((element) => {
+        // console.log(element.source.TABLE_NAME)
+        // console.log(!missingTables.includes(element.source.TABLE_NAME))
+        if (!missingTables.includes(element.source.TABLE_NAME)) {
+          temp.push(element);
+        }
+      });
+      // console.log(temp.length)
+      setAllColumnWiseData(temp);
+      setAllColumnWiseData2(temp);
+      resolve(temp.length);
+      // console.log(result.length)
+    });
   };
   const runValidation = () => {
     if (s_ip === "") {
@@ -342,35 +337,30 @@ const New = () => {
     }
     return true;
   };
-  const findMissingTables=(arr)=>{
+  const findMissingTables = (arr) => {
     // console.log(arr)
-    return new Promise((resolve,reject)=>{
-      
-      let array=arr
-      let missingValues=[]
-      if(!array.length){
-         return reject("Error In Finding Mising Valuse")
+    return new Promise((resolve, reject) => {
+      let array = arr;
+      let missingValues = [];
+      if (!array.length) {
+        return reject("Error In Finding Mising Valuse");
       }
-      array.forEach(e => {
-          if( e.destinantion.colletion == "" && e.destinantion.name == ""){
-           
-            
-            if(!missingValues.includes(e.source.name)){
-              missingValues.push(e.source.name)
-            }
+      array.forEach((e) => {
+        if (e.destinantion.colletion == "" && e.destinantion.name == "") {
+          if (!missingValues.includes(e.source.name)) {
+            missingValues.push(e.source.name);
           }
+        }
       });
-      setmissingTables(missingValues)
+      setmissingTables(missingValues);
       // console.log(missingValues)
-      resolve(missingValues)
-    })
-   
-   
-  }
+      resolve(missingValues);
+    });
+  };
   const handleOnclikc = (id) => {
-    if (id===tab)return 
+    if (id === tab) return;
     settab(id);
-    setloader(true)
+    setloader(true);
   };
   const [tab, settab] = useState(1);
   const alert = useAlert();
@@ -414,7 +404,7 @@ const New = () => {
         },
       };
       localStorage.setItem("cred", JSON.stringify(body));
-      let { data } = await axios.post(`${url}/connection`, body);
+      let { data } = await axios.post(`/connection`, body);
 
       if (data.status !== 200) {
         return alert.error(data.message);
@@ -435,35 +425,45 @@ const New = () => {
       setsourceColumnWise(sourecColumnWise);
       setdestinationColumnWise(destinantionColumnWise);
       await mappingForTableWise(soruceTables, destinationTables);
-      
+
       await mappingForColumnWise(sourceColumnWise, destinationColumnWise);
-      
     } catch (error) {
       alert.error(error.message || "Reconnect With data Base");
     }
   };
   useEffect(() => {
-    
-     setloader(false)
+    setloader(false);
     if (tab === 1) {
       mappingForTableWise(soruceTables, destinationTables);
     } else {
-     
       mappingForColumnWise(sourceColumnWise, destinationColumnWise);
     }
-   
   }, [tab]);
   useEffect(() => {
     async function fetchData() {
-      await  findMissingTables(allRows)
+      await findMissingTables(allRows);
     }
     fetchData();
-   
   }, [allRows]);
   return (
     <>
-   
       <div className="container">
+        <div class="dropdown">
+          <img style={{cursor:'pointer'}}
+            src="https://img.icons8.com/ios-glyphs/30/000000/exit.png"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          />
+
+          <ul class="dropdown-menu">
+            <li>
+              <a class="dropdown-item" href="#">
+               logout
+              </a>
+            </li>
+       
+          </ul>
+        </div>
         <div className="solid">
           <div className="row">
             <div className="col-6">
@@ -608,8 +608,8 @@ const New = () => {
             </a>
           </li>
         </ul>
-        {loader &&  <Spinner/>}
-        
+        {loader && <Spinner />}
+
         {/* tab switch */}
         {tab == 1 ? (
           <div className="row mt-5">
@@ -776,7 +776,13 @@ const New = () => {
             </table>
           </div>
         ) : (
-          <ColumnWise result={allColumnWiseData} rowData={allColumnWiseData2} setloader={setloader} setresult={setAllColumnWiseData} validation={Array.isArray(missingTables)} />
+          <ColumnWise
+            result={allColumnWiseData}
+            rowData={allColumnWiseData2}
+            setloader={setloader}
+            setresult={setAllColumnWiseData}
+            validation={Array.isArray(missingTables)}
+          />
         )}
       </div>
     </>
