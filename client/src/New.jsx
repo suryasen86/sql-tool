@@ -7,8 +7,9 @@ import ColumnWise from "./component/ColumnWise";
 import ReactHTMLTableToExcel from "react-html-table-to-excel";
 import Spinner from "./component/Spinner";
 const New = () => {
-  const url = "";
+  const url = "http://localhost:4000";
   const [missingTables, setmissingTables] = useState(false);
+  const [tablescriptgen, settablescriptgen] = useState(false);
   const copyScript = async (tableName, conType) => {
     let obj = cred[conType];
 
@@ -16,14 +17,15 @@ const New = () => {
       obj,
       tableName,
     };
-    let { data } = await axios.post(`/copy`, body);
+    let { data } = await axios.post(`${url}/copy`, body);
 
     if (data.status !== 200) {
       return alert.error(data.message);
     }
-    navigator.clipboard.writeText(data.data);
+    return data.data
+    // navigator.clipboard.writeText();
 
-    alert.success("Sript Copied");
+    // alert.success("Sript Copied");
   };
 
   const [cred, setcred] = useState(false);
@@ -404,7 +406,7 @@ const New = () => {
         },
       };
       localStorage.setItem("cred", JSON.stringify(body));
-      let { data } = await axios.post(`/connection`, body);
+      let { data } = await axios.post(`${url}/connection`, body);
 
       if (data.status !== 200) {
         return alert.error(data.message);
@@ -420,6 +422,10 @@ const New = () => {
         destinantionColumnWise,
         sourecColumnWise,
       } = data.data;
+      console.log(     sourceResult,
+        destinationResult,
+        destinantionColumnWise,
+        sourecColumnWise)
       setSoruceTables(sourceResult);
       setDestinationTables(destinationResult);
       setsourceColumnWise(sourecColumnWise);
@@ -445,6 +451,33 @@ const New = () => {
     }
     fetchData();
   }, [allRows]);
+
+  useEffect(()=>{
+    settablescriptgen(false)
+  },[filters])
+  const HandleGanrateScirpt=async ()=>{
+    let singleScript=""
+    let allinputChecked=document.querySelectorAll('input[type="checkbox"]:checked');
+    // console.log(allinputChecked)
+    for (let index = 0; index < allinputChecked.length; index++) {
+      const element = allinputChecked[index];
+       
+      let data= await copyScript(element.value,'source')
+      singleScript +=`${data} ;`
+
+    }
+    settablescriptgen(singleScript);
+
+  }
+  const downloadTxtFile=()=>{
+    const element = document.createElement("a");
+    const file = new Blob([tablescriptgen], {type: 'text/plain'});
+    element.href = URL.createObjectURL(file);
+    element.download = "myFile.sql";
+    document.body.appendChild(element); // Required for this to work in FireFox
+    element.click();
+  }
+
   return (
     <>
       <div className="container">
@@ -621,6 +654,11 @@ const New = () => {
               sheet="tablexls"
               buttonText="Download as XLS"
             />
+            <button className="btn btn-danger" onClick={HandleGanrateScirpt}> Genrate script</button>
+            {/* butt */}
+            {tablescriptgen&&
+          <button className="btn btn-warning mx-1" onClick={downloadTxtFile}>Download Script</button> }
+
             <div className="d-flex justify-content-between ">
               <h4>Table compairison</h4>
               <select
@@ -647,6 +685,7 @@ const New = () => {
             <table className="table" id="table-to-xls2">
               <thead>
                 <tr>
+                  <th>Check</th>
                   <th scope="col">#</th>
                   <th scope="col">SOURCE TABLE_COLLATION</th>
                   <th scope="col">SOURCE TABLE_NAME</th>
@@ -659,7 +698,9 @@ const New = () => {
                   allRows.map((e, index) => {
                     if (filters == 0 || filters == 1) {
                       return (
+                        
                         <tr key={index} className={e.color}>
+                          <input type="checkbox" name="checkbox" value={e.source.name}/>
                           <th scope="row">{index + 1}</th>
                           <td>{e.source.colletion}</td>
                           <td
@@ -686,6 +727,7 @@ const New = () => {
                       ) {
                         return (
                           <tr key={index} className={e.color}>
+                           <input type="checkbox" name="checkbox" value={e.source.name}/>
                             <th scope="row">{index + 1}</th>
                             <td>{e.source.colletion}</td>
                             <td
@@ -704,6 +746,7 @@ const New = () => {
                       if (e.source.colletion == "" && e.source.name == "") {
                         return (
                           <tr key={index} className={e.color}>
+                            <input type="checkbox" name="checkbox" value={e.source.name}/>
                             <th scope="row">{index + 1}</th>
                             <td
                               onClick={() => {
@@ -728,6 +771,7 @@ const New = () => {
                       if (e.color == "table-warning") {
                         return (
                           <tr key={index} className={e.color}>
+                            <input type="checkbox" name="checkbox" value={e.source.name}/>
                             <th scope="row">{index + 1}</th>
                             <td
                               onClick={() => {
@@ -751,6 +795,7 @@ const New = () => {
                     } else {
                       return (
                         <tr key={index} className={e.color}>
+                          <input type="checkbox" name="checkbox" value={e.source.name}/>
                           <th scope="row">{index + 1}</th>
                           <td
                             onClick={() => {
