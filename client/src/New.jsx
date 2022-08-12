@@ -646,7 +646,7 @@ const New = () => {
         {/* tab switch */}
         {tab == 1 ? (
           <div className="row mt-5">
-            <ReactHTMLTableToExcel
+          <div>  <ReactHTMLTableToExcel
               id="test-table-xls-button"
               className="btn btn-success"
               table="table-to-xls2"
@@ -657,7 +657,7 @@ const New = () => {
             <button className="btn btn-danger" onClick={HandleGanrateScirpt}> Genrate script</button>
             {/* butt */}
             {tablescriptgen&&
-          <button className="btn btn-warning mx-1" onClick={downloadTxtFile}>Download Script</button> }
+          <button className="btn btn-warning mx-1" onClick={downloadTxtFile}>Download Script</button> }</div>
 
             <div className="d-flex justify-content-between ">
               <h4>Table compairison</h4>

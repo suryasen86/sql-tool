@@ -155,8 +155,7 @@ const ColumnWise = ({ result, validation, setresult, rowData,setloader }) => {
             {" "}
             Genrate script
           </button>
-          {genScript&&
-          <button className="btn btn-warning mx-1" onClick={downloadTxtFile}>Download Script</button> }
+          
           
           <ReactHTMLTableToExcel
             id="test-table-xls-button"
@@ -166,6 +165,8 @@ const ColumnWise = ({ result, validation, setresult, rowData,setloader }) => {
             sheet="tablexls"
             buttonText="Download as XLS"
           />
+          {genScript&&
+          <button className="btn btn-warning mx-1" onClick={downloadTxtFile}>Download Script</button> }
 
           <select
             className="form-select"
