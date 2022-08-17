@@ -17,7 +17,7 @@ const New = () => {
       obj,
       tableName,
     };
-    let { data } = await axios.post(`${url}/copy`, body);
+    let { data } = await axios.post(`/copy`, body);
 
     if (data.status !== 200) {
       return alert.error(data.message);
@@ -406,7 +406,7 @@ const New = () => {
         },
       };
       localStorage.setItem("cred", JSON.stringify(body));
-      let { data } = await axios.post(`${url}/connection`, body);
+      let { data } = await axios.post(`/connection`, body);
 
       if (data.status !== 200) {
         return alert.error(data.message);
