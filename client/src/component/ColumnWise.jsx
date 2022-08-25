@@ -89,9 +89,9 @@ const ColumnWise = ({ result, validation, setresult, rowData,setloader }) => {
 
       // console.log(element.source.COLUMN_DEFAULT)
        if(element.source.COLUMN_KEY !='' &&  element.source.COLUMN_KEY !=  element.destination.COLUMN_KEY){
-           if(element.source.COLUMN_KEY =='UNI')  keys += `, ADD UNIQUE INDEX ${element.source.COLUMN_NAME}_UNIQUE (${element.source.COLUMN_NAME} ASC) VISIBLE`
-           else if (element.source.COLUMN_KEY =='PRI') keys +=`, ADD PRIMARY KEY (${element.source.COLUMN_NAME}) `
-           else if (element.source.COLUMN_KEY=='MUL') keys += `, ADD INDEX ${element.source.TABLE_NAME}_${element.source.COLUMN_NAME}_index  (${element.source.COLUMN_NAME} ASC) VISIBLE `
+          //  if(element.source.COLUMN_KEY =='UNI')  keys += `, ADD UNIQUE INDEX ${element.source.COLUMN_NAME}_UNIQUE (${element.source.COLUMN_NAME} ASC) VISIBLE`
+        if (element.source.COLUMN_KEY =='PRI') keys +=`, ADD PRIMARY KEY (${element.source.COLUMN_NAME}) `
+          //  else if (element.source.COLUMN_KEY=='MUL') keys += `, ADD INDEX ${element.source.TABLE_NAME}_${element.source.COLUMN_NAME}_index  (${element.source.COLUMN_NAME} ASC) VISIBLE `
           //  console.log(keys) 
           }
       //  }ADD INDEX `oauth_auth_codes_user_id_index` (`user_id` ASC) VISIBLE;

@@ -22,7 +22,10 @@ const New = () => {
     if (data.status !== 200) {
       return alert.error(data.message);
     }
-    return data.data
+   
+    let strArr=data?.data?.split("ENGINE")
+    console.log(data.data,strArr)
+    return strArr[0]
     // navigator.clipboard.writeText();
 
     // alert.success("Sript Copied");

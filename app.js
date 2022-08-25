@@ -48,7 +48,7 @@ app.post('/connection', async (req, res) => {
   let tablequery = `select * from TABLES where table_schema like 'db_ura%' order by TABLE_NAME`
   let columnquery = `select * from columns where table_schema like 'db_ura%' order by TABLE_NAME`
   try {
-    let { source, destination, type=1 } = req.body
+    let { source, destination, type=1} = req.body
     if (!source || !destination) {
       return res.send({ status: 422, message: "Invalid request" })
     }
@@ -81,8 +81,8 @@ app.post('/connection', async (req, res) => {
       destinationResult = await test(con2, `select * from TABLES where table_schema like '${destination.database}%' order by TABLE_NAME`)
       destinantionColumnWise = await test(con2, `select * from columns where table_schema like '${destination.database}%' order by TABLE_NAME`)
     } else {
-      destinationResult = await CSVToJSON().fromFile('./files/table.csv')
-      destinantionColumnWise = await CSVToJSON().fromFile('./files/column.csv')
+      destinationResult = await CSVToJSON().fromFile('./files/TABLES (3).csv')
+      destinantionColumnWise = await CSVToJSON().fromFile('./files/columns (3).csv')
     }
     let data = { sourceResult, destinationResult, sourecColumnWise, destinantionColumnWise }
     res.send({ status: 200, message: "success", data })
