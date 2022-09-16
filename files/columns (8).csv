@@ -147,10 +147,10 @@
 "def","db_ura","mst_invoice","created_at","13","NULL","YES","datetime",NULL,NULL,NULL,NULL,"0",NULL,NULL,"datetime",,,"select,insert,update,references",,"NEVER",NULL
 "def","db_ura","mst_invoice","updated_at","14","NULL","YES","datetime",NULL,NULL,NULL,NULL,"0",NULL,NULL,"datetime",,,"select,insert,update,references",,"NEVER",NULL
 "def","db_ura","mst_payment","id","1",NULL,"NO","int",NULL,NULL,"10","0",NULL,NULL,NULL,"int(11)","PRI","auto_increment","select,insert,update,references",,"NEVER",NULL
-"def","db_ura","mst_payment","name","2","NULL","YES","varchar","255","1020",NULL,NULL,NULL,"utf8mb4","utf8mb4_general_ci","varchar(255)",,,"select,insert,update,references",,"NEVER",NULL
-"def","db_ura","mst_payment","key","3","NULL","YES","varchar","45","180",NULL,NULL,NULL,"utf8mb4","utf8mb4_general_ci","varchar(45)",,,"select,insert,update,references",,"NEVER",NULL
-"def","db_ura","mst_payment","is_active","4","NULL","YES","varchar","45","180",NULL,NULL,NULL,"utf8mb4","utf8mb4_general_ci","varchar(45)",,,"select,insert,update,references",,"NEVER",NULL
-"def","db_ura","mst_payment","created_at","5","NULL","YES","varchar","45","180",NULL,NULL,NULL,"utf8mb4","utf8mb4_general_ci","varchar(45)",,,"select,insert,update,references","		","NEVER",NULL
+"def","db_ura","mst_payment","name","2","NULL","YES","varchar","255","255",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(255)",,,"select,insert,update,references",,"NEVER",NULL
+"def","db_ura","mst_payment","key","3","NULL","YES","varchar","45","45",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(45)",,,"select,insert,update,references",,"NEVER",NULL
+"def","db_ura","mst_payment","is_active","4","NULL","YES","varchar","45","45",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(45)",,,"select,insert,update,references",,"NEVER",NULL
+"def","db_ura","mst_payment","created_at","5","NULL","YES","varchar","45","45",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(45)",,,"select,insert,update,references","		","NEVER",NULL
 "def","db_ura","mst_payment","updated_at","6","NULL","YES","datetime",NULL,NULL,NULL,NULL,"0",NULL,NULL,"datetime",,,"select,insert,update,references",,"NEVER",NULL
 "def","db_ura","mst_product","id","1",NULL,"NO","int",NULL,NULL,"10","0",NULL,NULL,NULL,"int(10)","PRI","auto_increment","select,insert,update,references",,"NEVER",NULL
 "def","db_ura","mst_product","goods_code","2",NULL,"NO","varchar","25","25",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(25)",,,"select,insert,update,references","{""goodsName"":""banana juice"",""goodsCode"":""p004"",""measureUnit"":""101"",""unitPrice"":""2000"",
@@ -176,6 +176,12 @@
 "def","db_ura","mst_product","packageScaledValue","19","NULL","YES","varchar","45","45",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(45)",,,"select,insert,update,references",,"NEVER",NULL
 "def","db_ura","mst_product","pieceScaledValue","20","NULL","YES","varchar","45","45",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(45)",,,"select,insert,update,references",,"NEVER",NULL
 "def","db_ura","mst_product","exciseDutyCode","21","NULL","YES","varchar","45","45",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(45)",,,"select,insert,update,references",,"NEVER",NULL
+"def","db_ura","mst_product","commodityType","22","NULL","YES","varchar","45","45",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(45)",,,"select,insert,update,references",,"NEVER",NULL
+"def","db_ura","mst_product","exciseTaxRate","23","NULL","YES","varchar","45","45",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(45)",,,"select,insert,update,references",,"NEVER",NULL
+"def","db_ura","mst_product","isExempt","24","NULL","YES","varchar","45","45",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(45)",,,"select,insert,update,references",,"NEVER",NULL
+"def","db_ura","mst_product","isZeroRate","25","NULL","YES","varchar","45","45",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(45)",,,"select,insert,update,references",,"NEVER",NULL
+"def","db_ura","mst_product","taxRate","26","NULL","YES","varchar","45","45",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(45)",,,"select,insert,update,references",,"NEVER",NULL
+"def","db_ura","mst_product","taxType","27","NULL","YES","varchar","45","45",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(45)",,,"select,insert,update,references",,"NEVER",NULL
 "def","db_ura","mst_product_creates","id","1",NULL,"NO","int",NULL,NULL,"10","0",NULL,NULL,NULL,"int(8)","PRI","auto_increment","select,insert,update,references",,"NEVER",NULL
 "def","db_ura","mst_product_creates","trans_batch_id","2","NULL","YES","int",NULL,NULL,"10","0",NULL,NULL,NULL,"int(6)",,,"select,insert,update,references",,"NEVER",NULL
 "def","db_ura","mst_product_creates","json_single_array","3","NULL","YES","text","65535","65535",NULL,NULL,NULL,"latin1","latin1_swedish_ci","text",,,"select,insert,update,references",,"NEVER",NULL
@@ -198,6 +204,7 @@
 "def","db_ura","mst_purchases","error_message","11","NULL","YES","text","65535","65535",NULL,NULL,NULL,"latin1","latin1_swedish_ci","text",,,"select,insert,update,references",,"NEVER",NULL
 "def","db_ura","mst_purchases","created_at","12","NULL","YES","datetime",NULL,NULL,NULL,NULL,"0",NULL,NULL,"datetime",,,"select,insert,update,references",,"NEVER",NULL
 "def","db_ura","mst_purchases","updated_at","13","NULL","YES","datetime",NULL,NULL,NULL,NULL,"0",NULL,NULL,"datetime",,,"select,insert,update,references",,"NEVER",NULL
+"def","db_ura","mst_purchases","ref_no","14","NULL","YES","varchar","300","300",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(300)",,,"select,insert,update,references",,"NEVER",NULL
 "def","db_ura","mst_report","report_id","1",NULL,"NO","int",NULL,NULL,"10","0",NULL,NULL,NULL,"int(11)","PRI","auto_increment","select,insert,update,references",,"NEVER",NULL
 "def","db_ura","mst_report","report_name","2",NULL,"NO","varchar","100","100",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(100)",,,"select,insert,update,references",,"NEVER",NULL
 "def","db_ura","mst_report","report_view","3",NULL,"NO","varchar","100","100",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(100)",,,"select,insert,update,references",,"NEVER",NULL
@@ -234,6 +241,14 @@
 "def","db_ura","mst_salesman_invoice","is_active","17","1","NO","int",NULL,NULL,"10","0",NULL,NULL,NULL,"int(1)",,,"select,insert,update,references",,"NEVER",NULL
 "def","db_ura","mst_salesman_invoice","created_at","18","NULL","YES","text","65535","65535",NULL,NULL,NULL,"utf8","utf8_unicode_ci","text",,,"select,insert,update,references",,"NEVER",NULL
 "def","db_ura","mst_salesman_invoice","updated_at","19","NULL","YES","text","65535","65535",NULL,NULL,NULL,"utf8","utf8_unicode_ci","text",,,"select,insert,update,references",,"NEVER",NULL
+"def","db_ura","mst_salesman_invoice","buyerLegalName","20","NULL","YES","varchar","225","675",NULL,NULL,NULL,"utf8","utf8_unicode_ci","varchar(225)",,,"select,insert,update,references",,"NEVER",NULL
+"def","db_ura","mst_salesman_invoice","buyerTin","21","NULL","YES","varchar","45","135",NULL,NULL,NULL,"utf8","utf8_unicode_ci","varchar(45)",,,"select,insert,update,references",,"NEVER",NULL
+"def","db_ura","mst_salesman_invoice","grossAmount","22","NULL","YES","varchar","225","675",NULL,NULL,NULL,"utf8","utf8_unicode_ci","varchar(225)",,,"select,insert,update,references",,"NEVER",NULL
+"def","db_ura","mst_salesman_invoice","is_stock_adj","23","0","YES","int",NULL,NULL,"10","0",NULL,NULL,NULL,"int(2)",,,"select,insert,update,references",,"NEVER",NULL
+"def","db_ura","mst_salesman_invoice","itemCount","24","NULL","YES","varchar","225","675",NULL,NULL,NULL,"utf8","utf8_unicode_ci","varchar(225)",,,"select,insert,update,references",,"NEVER",NULL
+"def","db_ura","mst_salesman_invoice","netAmount","25","NULL","YES","varchar","225","675",NULL,NULL,NULL,"utf8","utf8_unicode_ci","varchar(225)",,,"select,insert,update,references",,"NEVER",NULL
+"def","db_ura","mst_salesman_invoice","tally_sync","26","0","YES","int",NULL,NULL,"10","0",NULL,NULL,NULL,"int(1)",,,"select,insert,update,references",,"NEVER",NULL
+"def","db_ura","mst_salesman_invoice","taxAmount","27","NULL","YES","varchar","225","675",NULL,NULL,NULL,"utf8","utf8_unicode_ci","varchar(225)",,,"select,insert,update,references",,"NEVER",NULL
 "def","db_ura","mst_sales_man","sales_man_id","1",NULL,"NO","int",NULL,NULL,"10","0",NULL,NULL,NULL,"int(11)","PRI","auto_increment","select,insert,update,references",,"NEVER",NULL
 "def","db_ura","mst_sales_man","name","2","NULL","YES","varchar","105","315",NULL,NULL,NULL,"utf8","utf8_unicode_ci","varchar(105)",,,"select,insert,update,references",,"NEVER",NULL
 "def","db_ura","mst_sales_man","mobile","3","NULL","YES","varchar","15","45",NULL,NULL,NULL,"utf8","utf8_unicode_ci","varchar(15)",,,"select,insert,update,references",,"NEVER",NULL
@@ -252,6 +267,10 @@
 "def","db_ura","mst_sales_man","created_at","16","NULL","YES","datetime",NULL,NULL,NULL,NULL,"0",NULL,NULL,"datetime",,,"select,insert,update,references",,"NEVER",NULL
 "def","db_ura","mst_sales_man","updated_at","17","NULL","YES","datetime",NULL,NULL,NULL,NULL,"0",NULL,NULL,"datetime",,,"select,insert,update,references",,"NEVER",NULL
 "def","db_ura","mst_sales_man","gdw_id","18","NULL","YES","int",NULL,NULL,"10","0",NULL,NULL,NULL,"int(11)",,,"select,insert,update,references",,"NEVER",NULL
+"def","db_ura","mst_sales_man","prefix","19","NULL","YES","varchar","45","135",NULL,NULL,NULL,"utf8","utf8_unicode_ci","varchar(45)",,,"select,insert,update,references",,"NEVER",NULL
+"def","db_ura","mst_sales_man","sales_acc_id","20","NULL","YES","varchar","200","600",NULL,NULL,NULL,"utf8","utf8_unicode_ci","varchar(200)",,,"select,insert,update,references",,"NEVER",NULL
+"def","db_ura","mst_sales_man","vat_acc_id","21","NULL","YES","varchar","200","600",NULL,NULL,NULL,"utf8","utf8_unicode_ci","varchar(200)",,,"select,insert,update,references",,"NEVER",NULL
+"def","db_ura","mst_sales_man","voucher_id","22","NULL","YES","int",NULL,NULL,"10","0",NULL,NULL,NULL,"int(11)",,,"select,insert,update,references",,"NEVER",NULL
 "def","db_ura","mst_schedulers","id","1",NULL,"NO","int",NULL,NULL,"10","0",NULL,NULL,NULL,"int(8)","PRI","auto_increment","select,insert,update,references",,"NEVER",NULL
 "def","db_ura","mst_schedulers","name","2",NULL,"NO","varchar","45","45",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(45)",,,"select,insert,update,references",,"NEVER",NULL
 "def","db_ura","mst_schedulers","log_mode","3",NULL,"NO","varchar","10","10",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(10)",,,"select,insert,update,references",,"NEVER",NULL
@@ -365,6 +384,20 @@
 "def","db_ura","recon_dtl","supp_name","11","NULL","YES","varchar","150","150",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(150)",,,"select,insert,update,references",,"NEVER",NULL
 "def","db_ura","recon_dtl","supp_tin_num","12","NULL","YES","varchar","45","45",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(45)",,,"select,insert,update,references",,"NEVER",NULL
 "def","db_ura","recon_dtl","seller_ref_num","13","NULL","YES","varchar","45","45",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(45)",,,"select,insert,update,references",,"NEVER",NULL
+"def","db_ura","return_stock","id","1",NULL,"NO","int",NULL,NULL,"10","0",NULL,NULL,NULL,"int(11)","PRI","auto_increment","select,insert,update,references",,"NEVER",NULL
+"def","db_ura","return_stock","from","2","NULL","YES","varchar","255","255",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(255)",,,"select,insert,update,references",,"NEVER",NULL
+"def","db_ura","return_stock","to","3","NULL","YES","varchar","45","45",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(45)",,,"select,insert,update,references",,"NEVER",NULL
+"def","db_ura","return_stock","goods_code","4","NULL","YES","varchar","45","45",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(45)",,,"select,insert,update,references",,"NEVER",NULL
+"def","db_ura","return_stock","goods_name","5","NULL","YES","varchar","235","235",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(235)",,,"select,insert,update,references",,"NEVER",NULL
+"def","db_ura","return_stock","quantity","6","NULL","YES","varchar","45","45",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(45)",,,"select,insert,update,references",,"NEVER",NULL
+"def","db_ura","return_stock","unitPrice","7","NULL","YES","varchar","45","45",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(45)",,,"select,insert,update,references",,"NEVER",NULL
+"def","db_ura","return_stock","is_active","8","NULL","YES","varchar","45","45",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(45)",,,"select,insert,update,references",,"NEVER",NULL
+"def","db_ura","return_stock","created_at","9","NULL","YES","varchar","45","45",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(45)",,,"select,insert,update,references","		","NEVER",NULL
+"def","db_ura","return_stock","updated_at","10","NULL","YES","datetime",NULL,NULL,NULL,NULL,"0",NULL,NULL,"datetime",,,"select,insert,update,references",,"NEVER",NULL
+"def","db_ura","return_stock","uom","11","NULL","YES","varchar","45","45",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(45)",,,"select,insert,update,references",,"NEVER",NULL
+"def","db_ura","return_stock","commodityGoodsId","12","NULL","YES","varchar","45","45",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(45)",,,"select,insert,update,references",,"NEVER",NULL
+"def","db_ura","return_stock","remark","13","NULL","YES","varchar","90","90",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(90)",,,"select,insert,update,references",,"NEVER",NULL
+"def","db_ura","return_stock","trip_id","14","NULL","YES","varchar","45","45",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(45)",,,"select,insert,update,references",,"NEVER",NULL
 "def","db_ura","routing","id","1",NULL,"NO","int",NULL,NULL,"10","0",NULL,NULL,NULL,"int(11)","PRI","auto_increment","select,insert,update,references",,"NEVER",NULL
 "def","db_ura","routing","function","2","NULL","YES","varchar","30","30",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(30)",,,"select,insert,update,references",,"NEVER",NULL
 "def","db_ura","routing","path","3","NULL","YES","varchar","100","100",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(100)",,,"select,insert,update,references",,"NEVER",NULL
@@ -375,6 +408,12 @@
 "def","db_ura","routing","updated_by","8","NULL","YES","varchar","50","50",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(50)",,,"select,insert,update,references",,"NEVER",NULL
 "def","db_ura","routing","createdAt","9",NULL,"NO","datetime",NULL,NULL,NULL,NULL,"0",NULL,NULL,"datetime",,,"select,insert,update,references",,"NEVER",NULL
 "def","db_ura","routing","updatedAt","10",NULL,"NO","datetime",NULL,NULL,NULL,NULL,"0",NULL,NULL,"datetime",,,"select,insert,update,references",,"NEVER",NULL
+"def","db_ura","sales_ladger","id","1",NULL,"NO","int",NULL,NULL,"10","0",NULL,NULL,NULL,"int(11)","PRI","auto_increment","select,insert,update,references",,"NEVER",NULL
+"def","db_ura","sales_ladger","name","2",NULL,"NO","varchar","45","45",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(45)",,,"select,insert,update,references",,"NEVER",NULL
+"def","db_ura","sales_ladger","type","3","'non-vat'","NO","varchar","45","45",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(45)",,,"select,insert,update,references",,"NEVER",NULL
+"def","db_ura","sales_ladger","is_active","4","1","NO","int",NULL,NULL,"10","0",NULL,NULL,NULL,"int(1)",,,"select,insert,update,references",,"NEVER",NULL
+"def","db_ura","sales_ladger","created_at","5","NULL","YES","datetime",NULL,NULL,NULL,NULL,"0",NULL,NULL,"datetime",,,"select,insert,update,references",,"NEVER",NULL
+"def","db_ura","sales_ladger","updated_at","6","NULL","YES","datetime",NULL,NULL,NULL,NULL,"0",NULL,NULL,"datetime",,,"select,insert,update,references",,"NEVER",NULL
 "def","db_ura","schedulers","id","1",NULL,"NO","int",NULL,NULL,"10","0",NULL,NULL,NULL,"int(8)","PRI","auto_increment","select,insert,update,references",,"NEVER",NULL
 "def","db_ura","schedulers","name","2","NULL","YES","varchar","45","45",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(45)",,,"select,insert,update,references",,"NEVER",NULL
 "def","db_ura","schedulers","status","3","0","YES","int",NULL,NULL,"10","0",NULL,NULL,NULL,"int(1)",,,"select,insert,update,references",,"NEVER",NULL
@@ -467,6 +506,21 @@ ERROR","NEVER",NULL
 "def","db_ura","trans_exceldata_hdr","updated_by","18","NULL","YES","varchar","50","50",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(50)",,,"select,insert,update,references",,"NEVER",NULL
 "def","db_ura","trans_exceldata_hdr","createdAt","19",NULL,"NO","datetime",NULL,NULL,NULL,NULL,"0",NULL,NULL,"datetime",,,"select,insert,update,references",,"NEVER",NULL
 "def","db_ura","trans_exceldata_hdr","updatedAt","20",NULL,"NO","datetime",NULL,NULL,NULL,NULL,"0",NULL,NULL,"datetime",,,"select,insert,update,references",,"NEVER",NULL
+"def","db_ura","trans_stock","id","1",NULL,"NO","int",NULL,NULL,"10","0",NULL,NULL,NULL,"int(11)","PRI","auto_increment","select,insert,update,references",,"NEVER",NULL
+"def","db_ura","trans_stock","from_godown","2","NULL","YES","varchar","255","255",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(255)",,,"select,insert,update,references",,"NEVER",NULL
+"def","db_ura","trans_stock","to_sales_man","3","NULL","YES","varchar","45","45",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(45)",,,"select,insert,update,references",,"NEVER",NULL
+"def","db_ura","trans_stock","goods_code","4","NULL","YES","varchar","45","45",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(45)",,,"select,insert,update,references",,"NEVER",NULL
+"def","db_ura","trans_stock","goods_name","5","NULL","YES","varchar","235","235",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(235)",,,"select,insert,update,references",,"NEVER",NULL
+"def","db_ura","trans_stock","quantity","6","NULL","YES","varchar","45","45",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(45)",,,"select,insert,update,references",,"NEVER",NULL
+"def","db_ura","trans_stock","unitPrice","7","NULL","YES","varchar","45","45",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(45)",,,"select,insert,update,references",,"NEVER",NULL
+"def","db_ura","trans_stock","is_active","8","NULL","YES","varchar","45","45",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(45)",,,"select,insert,update,references",,"NEVER",NULL
+"def","db_ura","trans_stock","created_at","9","NULL","YES","varchar","45","45",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(45)",,,"select,insert,update,references","		","NEVER",NULL
+"def","db_ura","trans_stock","updated_at","10","NULL","YES","datetime",NULL,NULL,NULL,NULL,"0",NULL,NULL,"datetime",,,"select,insert,update,references",,"NEVER",NULL
+"def","db_ura","trans_stock","voucher_numbers","11","NULL","YES","varchar","45","45",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(45)",,,"select,insert,update,references",,"NEVER",NULL
+"def","db_ura","trans_stock","voucher_Id","12","NULL","YES","varchar","45","45",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(45)",,,"select,insert,update,references",,"NEVER",NULL
+"def","db_ura","trans_stock","uom","13","NULL","YES","varchar","45","45",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(45)",,,"select,insert,update,references",,"NEVER",NULL
+"def","db_ura","trans_stock","commodityGoodsId","14","NULL","YES","varchar","45","45",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(45)",,,"select,insert,update,references",,"NEVER",NULL
+"def","db_ura","trans_stock","trip_id","15","NULL","YES","varchar","45","45",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(45)",,,"select,insert,update,references",,"NEVER",NULL
 "def","db_ura","trans_stock_manage","id","1",NULL,"NO","int",NULL,NULL,"10","0",NULL,NULL,NULL,"int(11)","PRI","auto_increment","select,insert,update,references",,"NEVER",NULL
 "def","db_ura","trans_stock_manage","trip_hdr_id","2","NULL","YES","varchar","45","45",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(45)",,,"select,insert,update,references",,"NEVER",NULL
 "def","db_ura","trans_stock_manage","invoice_type","3","NULL","YES","int",NULL,NULL,"10","0",NULL,NULL,NULL,"int(1)",,,"select,insert,update,references",,"NEVER",NULL
@@ -493,6 +547,9 @@ ERROR","NEVER",NULL
 "def","db_ura","trans_stock_summary","updated_by","8","NULL","YES","varchar","45","45",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(45)",,,"select,insert,update,references",,"NEVER",NULL
 "def","db_ura","trans_stock_summary","createdAt","9","NULL","YES","varchar","45","45",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(45)",,,"select,insert,update,references",,"NEVER",NULL
 "def","db_ura","trans_stock_summary","updatedAt","10","NULL","YES","varchar","45","45",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(45)",,,"select,insert,update,references",,"NEVER",NULL
+"def","db_ura","trans_stock_summary","commodityCategoryId","11","NULL","YES","varchar","45","45",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(45)",,,"select,insert,update,references",,"NEVER",NULL
+"def","db_ura","trans_stock_summary","unitPrice","12","NULL","YES","varchar","45","45",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(45)",,,"select,insert,update,references",,"NEVER",NULL
+"def","db_ura","trans_stock_summary","uom","13","NULL","YES","varchar","45","45",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(45)",,,"select,insert,update,references",,"NEVER",NULL
 "def","db_ura","trans_trip_dtl","trip_dtl_id","1",NULL,"NO","int",NULL,NULL,"10","0",NULL,NULL,NULL,"int(11)","PRI","auto_increment","select,insert,update,references",,"NEVER",NULL
 "def","db_ura","trans_trip_dtl","trip_hdr_id","2",NULL,"NO","int",NULL,NULL,"10","0",NULL,NULL,NULL,"int(11)",,,"select,insert,update,references",,"NEVER",NULL
 "def","db_ura","trans_trip_dtl","item_id","3",NULL,"NO","varchar","45","45",NULL,NULL,NULL,"latin1","latin1_swedish_ci","varchar(45)",,,"select,insert,update,references",,"NEVER",NULL

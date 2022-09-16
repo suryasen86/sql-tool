@@ -1,10 +1,12 @@
 const express = require('express')
 const app = express()
 const util = require("util");
+ROOT_DIR = __dirname + '/';
 const dotenv = require('dotenv');
 const bodyParser = require('body-parser')
 const mysql = require('mysql2')
 const port = 3000
+const fileUpload = require("express-fileupload");
 const path = require('path')
 // setting up congig file  ;
 dotenv.config({ path: './config.env' })
@@ -16,7 +18,16 @@ const db_credentials = {
 var cors = require('cors');
 
 app.use(cors());
-app.use(bodyParser.json())
+app.use(fileUpload());
+
+
+ 
+app.use(bodyParser.json()); // support json encoded bodies
+
+app.use(bodyParser.urlencoded({ extended: false })); // support encoded bodies
+
+app.use(express.urlencoded({ extended: true, limit: "50mb" }));
+app.use(express.json({ limit: "50mb" }));
 
 async function test(db_con, query) {
   // console.log(query)
@@ -44,11 +55,17 @@ async function check(db_con) {
 
 app.post('/connection', async (req, res) => {
   let sourceErr, destinationErr, sourceResult, destinationResult
+  let destination_column_csv_path
+  let destination_table_csv_path
+  let source_column_csv_path
+  let source_table_csv_path
   let inFoschema = `use information_schema`
   let tablequery = `select * from TABLES where table_schema like 'db_ura%' order by TABLE_NAME`
   let columnquery = `select * from columns where table_schema like 'db_ura%' order by TABLE_NAME`
   try {
-    let { source, destination, type=1} = req.body
+    let { source, destination, type} = req.body
+    if(type==1){
+
     if (!source || !destination) {
       return res.send({ status: 422, message: "Invalid request" })
     }
@@ -69,25 +86,141 @@ app.post('/connection', async (req, res) => {
     delete destination.ip
     db_credentials.source_global = source
     db_credentials.destination_global = destination
+
+
     var con = mysql.createConnection(source);
     await check(con)
     await test(con, inFoschema)
     sourceResult = await test(con, `select * from TABLES where table_schema like '${source.database}%' order by TABLE_NAME`)
     let sourecColumnWise = await test(con, `select * from columns where table_schema like '${source.database}%' order by TABLE_NAME`)
-    if (type == 1) {
+    var con2 = mysql.createConnection(destination);
+    await check(con2)
+    await test(con2, inFoschema)
+    destinationResult = await test(con2, `select * from TABLES where table_schema like '${destination.database}%' order by TABLE_NAME`)
+    destinantionColumnWise = await test(con2, `select * from columns where table_schema like '${destination.database}%' order by TABLE_NAME`)
+    let data = { sourceResult, destinationResult, sourecColumnWise, destinantionColumnWise }
+    return res.send({ status: 200, message: "success", data })
+    }else if (type==2){
+      let source={}
+      let {ip,user,database,password,port}=req.body
+      if (!port == '3306') {
+        source.host = ip + ":" + port
+      } else {
+        source.host = ip
+      }
+      source.user=user
+      source.database=database
+      source.password=password
+      var con = mysql.createConnection(source);
+      await check(con)
+      await test(con, inFoschema)
+      sourceResult = await test(con, `select * from TABLES where table_schema like '${source.database}%' order by TABLE_NAME`)
+      let sourecColumnWise = await test(con, `select * from columns where table_schema like '${source.database}%' order by TABLE_NAME`)
+      
+      
+      const destination_column = req.files?.destination_column;
+      if(!destination_column)  throw Error("Destination column file not found")
+      await destination_column.mv(`${ROOT_DIR}files/${req.files.destination_column.name}`);
+      destination_column_csv_path=req.files.destination_column.name;
+      
+
+      const destination_table = req.files?.destination_table;
+      if(!destination_table)  throw Error("Destination table file not found")
+      await destination_table.mv(`${ROOT_DIR}files/${req.files.destination_table.name}`);
+      destination_table_csv_path=req.files.destination_table.name;
+      
+
+      destinationResult = await CSVToJSON().fromFile(`./files/${destination_table_csv_path}`)
+      destinantionColumnWise = await CSVToJSON().fromFile(`./files/${destination_column_csv_path}`)
+      let data = { sourceResult, destinationResult, sourecColumnWise, destinantionColumnWise }
+     return  res.send({ status: 200, message: "success", data })
+    
+    }else if(type==3){
+      let destination={}
+      let {ip,user,database,password,port}=req.body
+      if (!port == '3306') {
+        destination.host = ip + ":" + port
+      } else {
+        destination.host = ip
+      }
+      destination.user=user
+      destination.database=database
+      destination.password=password
+
       var con2 = mysql.createConnection(destination);
       await check(con2)
       await test(con2, inFoschema)
       destinationResult = await test(con2, `select * from TABLES where table_schema like '${destination.database}%' order by TABLE_NAME`)
       destinantionColumnWise = await test(con2, `select * from columns where table_schema like '${destination.database}%' order by TABLE_NAME`)
-    } else {
-      destinationResult = await CSVToJSON().fromFile('./files/TABLES (3).csv')
-      destinantionColumnWise = await CSVToJSON().fromFile('./files/columns (3).csv')
+
+
+
+      const source_column=req.files?.source_column
+      if(!source_column)  throw Error("source column file not found")
+      await source_column.mv(`${ROOT_DIR}files/${req.files.source_column.name}`);
+      source_column_csv_path=req.files.source_column.name;
+
+
+
+      const source_table=req.files?.source_table
+      if(!source_table)  throw Error("source table file not found")
+      await source_table.mv(`${ROOT_DIR}files/${req.files.source_table.name}`);
+      source_table_csv_path=req.files.source_table.name;
+
+      let sourecColumnWise = await CSVToJSON().fromFile(`./files/${source_column_csv_path}`)
+      sourceResult=await CSVToJSON().fromFile(`./files/${source_table_csv_path}`)
+
+
+
+
+      let data = { sourceResult, destinationResult, sourecColumnWise, destinantionColumnWise }
+     return  res.send({ status: 200, message: "success", data })
+    }else if (type==4){
+      // validation 
+      const destination_column = req.files?.destination_column;
+      if(!destination_column)  throw Error("Destination column file not found")
+      await destination_column.mv(`${ROOT_DIR}files/${req.files?.destination_column.name}`);
+      destination_column_csv_path=req.files?.destination_column.name;
+      
+
+      const destination_table = req.files?.destination_table;
+      if(!destination_table)  throw Error("Destination table file not found")
+      await destination_table.mv(`${ROOT_DIR}files/${req.files?.destination_table.name}`);
+      destination_table_csv_path=req.files?.destination_table.name;
+      
+      const source_column=req.files?.source_column
+      if(!source_column)  throw Error("source column file not found")
+      await source_column.mv(`${ROOT_DIR}files/${req.files?.source_column.name}`);
+      source_column_csv_path=req.files.source_column.name;
+
+
+
+      const source_table=req.files?.source_table
+      if(!source_table)  throw Error("source table file not found")
+      await source_table.mv(`${ROOT_DIR}files/${req.files?.source_table.name}`);
+      source_table_csv_path=req.files?.source_table.name;
+
+      let sourecColumnWise = await CSVToJSON().fromFile(`./files/${source_column_csv_path}`)
+      sourceResult=await CSVToJSON().fromFile(`./files/${source_table_csv_path}`)
+
+      destinationResult = await CSVToJSON().fromFile(`./files/${destination_table_csv_path}`)
+      destinantionColumnWise = await CSVToJSON().fromFile(`./files/${destination_column_csv_path}`)
+
+
+
+
+
+
+      let data = { sourceResult, destinationResult, sourecColumnWise, destinantionColumnWise }
+     return  res.send({ status: 200, message: "success", data })
+       
+    }else {
+      return res.send("error")
     }
-    let data = { sourceResult, destinationResult, sourecColumnWise, destinantionColumnWise }
-    res.send({ status: 200, message: "success", data })
+ 
+ 
   } catch (error) {
-    console.log(error.message)
+    console.log(error)
     res.send({ status: 500, message: error.message || "technical Error" })
   }
 
